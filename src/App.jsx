@@ -6,7 +6,7 @@
 //   Supabase Dashboard → Project Settings → API
 // ================================================================
 const SUPABASE_URL  = 'https://jbaxtfontbimrkzdqave.supabase.co';
-const SUPABASE_ANON = 'sb_publishable_K0KlgPUZUXDkWyNr7ggEbw_wcsf9HMV';
+const SUPABASE_ANON = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImpiYXh0Zm9udGJpbXJremRxYXZlIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzg0OTIzMzMsImV4cCI6MjA5NDA2ODMzM30.NsiJf1pb8jszYxaHClVZjKGXEnYOkrI7sVE_yn_Ewxg';
 
 // Lightweight Supabase REST helper — no SDK needed
 const sb = {
