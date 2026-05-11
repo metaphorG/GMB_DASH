@@ -5,8 +5,8 @@
 // below before deploying. Get them from:
 //   Supabase Dashboard → Project Settings → API
 // ================================================================
-const SUPABASE_URL  = 'https://jbaxtfontbimrkzdqave.supabase.co';
-const SUPABASE_ANON = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImpiYXh0Zm9udGJpbXJremRxYXZlIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzg0OTIzMzMsImV4cCI6MjA5NDA2ODMzM30.NsiJf1pb8jszYxaHClVZjKGXEnYOkrI7sVE_yn_Ewxg';
+const SUPABASE_URL  = 'https://zncvxvmqtnpofwibuhfl.supabase.co';
+const SUPABASE_ANON = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InpuY3Z4dm1xdG5wb2Z3aWJ1aGZsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzg1MDczODksImV4cCI6MjA5NDA4MzM4OX0.UsqnP6IDDEYnFq7-4peselbsqFKycUVRXyZaJcn4hJY';
 
 // Lightweight Supabase REST helper — no SDK needed
 const sb = {
