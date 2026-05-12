@@ -1,4 +1,14 @@
-import { useState, useMemo, useCallback, Fragment } from "react";
+import { useState, useMemo, useCallback, Fragment, useEffect, useRef } from "react";
+
+// ═══════════════════════════════════════════════════════════════════
+// JSONBIN CONFIGURATION — paste your values here
+// ═══════════════════════════════════════════════════════════════════
+const JSONBIN_ID  = 'YOUR_BIN_ID_HERE';      // e.g. '6830abc123def456'
+const JSONBIN_KEY = 'YOUR_MASTER_KEY_HERE';  // e.g. '$2b$10$abc...'
+const BIN_URL     = 'https://api.jsonbin.io/v3/b/' + JSONBIN_ID;
+const HDR_READ    = { 'X-Master-Key': JSONBIN_KEY, 'X-Bin-Meta': 'false' };
+const HDR_WRITE   = { 'Content-Type': 'application/json', 'X-Master-Key': JSONBIN_KEY };
+const CONFIGURED  = JSONBIN_ID !== 'YOUR_BIN_ID_HERE' && JSONBIN_KEY !== 'YOUR_MASTER_KEY_HERE';
 
 // ═══════════════════════════════════════════════════════════════════
 // CONSTANTS
@@ -994,7 +1004,55 @@ export default function App() {
   const [detail,setDetail]= useState(null);
   const [isNew, setIsNew] = useState(false);
   const [cpOpen,setCpOpen]= useState(true);
-  const [mainTab,setMainTab] = useState(0); // 0=Revenue Overview, 1=Detailed Matrix
+  const [mainTab,setMainTab] = useState(0);
+
+  // ── SYNC STATE ──────────────────────────────────────────────────
+  const [syncStatus, setSyncStatus] = useState(CONFIGURED ? 'loading' : 'no-config');
+  const [lastSaved,  setLastSaved]  = useState(null);
+  const loaded    = useRef(false);
+  const saveTimer = useRef(null);
+
+  // ── LOAD from JSONBin on mount ──────────────────────────────────
+  useEffect(function() {
+    if (!CONFIGURED) { loaded.current = true; return; }
+    fetch(BIN_URL + '/latest', { headers: HDR_READ })
+      .then(function(r) { return r.ok ? r.json() : Promise.reject('fetch-err'); })
+      .then(function(data) {
+        if (data && data.ctrl && Object.keys(data.ctrl).length > 0) {
+          setCtrl(Object.assign({}, DEF_CTRL, data.ctrl));
+        }
+        if (data && data.plots && data.plots.length > 0) {
+          setPlots(data.plots);
+        }
+        setSyncStatus('saved');
+        setLastSaved(new Date());
+        loaded.current = true;
+      })
+      .catch(function() {
+        setSyncStatus('offline');
+        loaded.current = true;
+      });
+  }, []);
+
+  // ── AUTO-SAVE to JSONBin (debounced 2.5s after last change) ─────
+  useEffect(function() {
+    if (!loaded.current || !CONFIGURED) return;
+    setSyncStatus('saving');
+    if (saveTimer.current) clearTimeout(saveTimer.current);
+    saveTimer.current = setTimeout(function() {
+      fetch(BIN_URL, {
+        method: 'PUT',
+        headers: HDR_WRITE,
+        body: JSON.stringify({ ctrl: ctrl, plots: plots }),
+      })
+        .then(function(r) {
+          if (r.ok) { setSyncStatus('saved'); setLastSaved(new Date()); }
+          else setSyncStatus('error');
+        })
+        .catch(function() { setSyncStatus('error'); });
+    }, 2500);
+    return function() { if (saveTimer.current) clearTimeout(saveTimer.current); };
+  }, [ctrl, plots]);
 
   // ── COMPUTE ENGINE ──────────────────────────────────────────────
   const computed = useMemo(function(){
@@ -1078,6 +1136,20 @@ export default function App() {
     return <PasswordGate onUnlock={function(){ setUnlocked(true); }}/>;
   }
 
+  // Loading screen while fetching from JSONBin
+  if (syncStatus === 'loading') {
+    return (
+      <div style={{minHeight:'100vh',background:'#0f172a',display:'flex',alignItems:'center',justifyContent:'center',fontFamily:"'Inter',system-ui,sans-serif"}}>
+        <div style={{textAlign:'center',color:'#fff'}}>
+          <div style={{width:52,height:52,border:'4px solid #1e40af',borderTopColor:'#60a5fa',borderRadius:'50%',margin:'0 auto 16px',animation:'spin 0.9s linear infinite'}}/>
+          <style>{`@keyframes spin{to{transform:rotate(360deg)}}`}</style>
+          <p style={{fontSize:14,fontWeight:600,margin:'0 0 6px'}}>Loading dashboard data…</p>
+          <p style={{fontSize:11,color:'#93c5fd',margin:0}}>Fetching your saved settings from JSONBin</p>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div style={{background:'#f1f5f9',minHeight:'100vh',fontFamily:"'Inter',system-ui,sans-serif",fontSize:12}}>
 
@@ -1087,7 +1159,23 @@ export default function App() {
           <p style={{color:'#fff',fontSize:13,fontWeight:700,margin:0}}>GMB Land Policy — Revenue Impact Dashboard</p>
           <p style={{color:'#93c5fd',fontSize:9,margin:'2px 0 0'}}>{plots.length} plots · 4 land categories · 8 policy scenarios · Live IRR calculation</p>
         </div>
-        <div style={{display:'flex',gap:6}}>
+        <div style={{display:'flex',gap:8,alignItems:'center'}}>
+          {/* Sync status pill */}
+          {(function(){
+            const cfg = {
+              saved:     {bg:'#14532d', color:'#bbf7d0', icon:'✓', text:'Saved'    + (lastSaved?' · '+lastSaved.toLocaleTimeString('en-IN',{hour:'2-digit',minute:'2-digit'}):'')},
+              saving:    {bg:'#1e3a8a', color:'#bfdbfe', icon:'⟳', text:'Saving…'},
+              offline:   {bg:'#7c2d12', color:'#fed7aa', icon:'⚠', text:'Offline — using defaults'},
+              error:     {bg:'#7f1d1d', color:'#fecaca', icon:'✗', text:'Save failed — retry…'},
+              'no-config':{bg:'#374151',color:'#d1d5db', icon:'⚙', text:'JSONBin not configured'},
+            }[syncStatus] || {bg:'#374151',color:'#d1d5db',icon:'…',text:'—'};
+            return (
+              <div style={{background:cfg.bg,color:cfg.color,fontSize:10,padding:'4px 10px',borderRadius:20,display:'flex',alignItems:'center',gap:5,fontWeight:500,whiteSpace:'nowrap'}}>
+                <span style={{fontSize:11}}>{cfg.icon}</span>
+                <span>{cfg.text}</span>
+              </div>
+            );
+          })()}
           <button onClick={function(){setCpOpen(function(o){return !o;});}} style={{fontSize:10,padding:'4px 10px',borderRadius:4,cursor:'pointer',background:'rgba(255,255,255,0.12)',color:'#fff',border:'1px solid rgba(255,255,255,0.25)'}}>
             {cpOpen?'Hide Panel':'Show Panel'}
           </button>
