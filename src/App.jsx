@@ -326,26 +326,22 @@ function ControlPanel({ c, setC }) {
                 <span style={badge(colors[i],bgs[i])}>S{l}</span>
                 <span style={{fontSize:9,color:'#6b7280',fontFamily:'monospace'}}>{lo} – {hi} sqm</span>
               </div>
-              {/* Two-column slider grid — equal width, no overflow */}
-              <div style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:6}}>
-                <div>
-                  <p style={{fontSize:8,color:'#9ca3af',margin:'0 0 2px',fontWeight:600}}>Rent %</p>
-                  <div style={{display:'flex',alignItems:'center',gap:3}}>
-                    <input type="range" min={0} max={150} step={5} value={c.slabPcts[i]}
-                      onChange={function(e){updArr('slabPcts',i)(+e.target.value);}}
-                      style={{flex:1,minWidth:0,accentColor:colors[i]}}/>
-                    <span style={{fontSize:10,fontWeight:700,color:colors[i],width:30,textAlign:'right',flexShrink:0}}>{c.slabPcts[i]}%</span>
-                  </div>
-                </div>
-                <div>
-                  <p style={{fontSize:8,color:'#9ca3af',margin:'0 0 2px',fontWeight:600}}>Util %</p>
-                  <div style={{display:'flex',alignItems:'center',gap:3}}>
-                    <input type="range" min={10} max={100} step={5} value={c.slabUF[i]}
-                      onChange={function(e){updArr('slabUF',i)(+e.target.value);}}
-                      style={{flex:1,minWidth:0,accentColor:'#6b7280'}}/>
-                    <span style={{fontSize:10,fontWeight:700,color:'#374151',width:30,textAlign:'right',flexShrink:0}}>{c.slabUF[i]}%</span>
-                  </div>
-                </div>
+              {/* Vertically stacked sliders — always fits panel width */}
+              <div style={{display:'flex',flexDirection:'column',gap:4}}>
+                {[
+                  {label:'Rent %', val:c.slabPcts[i], min:0,  max:150, step:5,  color:colors[i], onChange:function(v){updArr('slabPcts',i)(v);}},
+                  {label:'Util %', val:c.slabUF[i],   min:10, max:100, step:5,  color:'#6b7280', onChange:function(v){updArr('slabUF',i)(v);}},
+                ].map(function(row){
+                  return (
+                    <div key={row.label} style={{display:'flex',alignItems:'center',gap:4}}>
+                      <span style={{fontSize:9,color:'#9ca3af',fontWeight:600,width:36,flexShrink:0}}>{row.label}</span>
+                      <input type="range" min={row.min} max={row.max} step={row.step} value={row.val}
+                        onChange={function(e){row.onChange(+e.target.value);}}
+                        style={{flex:1,minWidth:0,accentColor:row.color}}/>
+                      <span style={{fontSize:10,fontWeight:700,color:row.color,width:34,textAlign:'right',flexShrink:0}}>{row.val}%</span>
+                    </div>
+                  );
+                })}
               </div>
             </div>
           );
