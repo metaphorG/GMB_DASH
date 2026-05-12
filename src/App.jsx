@@ -290,71 +290,66 @@ function ControlPanel({ c, setC }) {
         })}
       </CPSec>
 
-      {/* C — Slab Configuration — CLEAN TABLE LAYOUT */}
+      {/* C — Slab Configuration — COMPACT FIXED LAYOUT */}
       <CPSec label="C — Slab Configuration" open={open.slab} onToggle={function(){tog('slab');}}>
-        <p style={{fontSize:9,color:'#9ca3af',marginBottom:8}}>Applies to valuation-based options (Opt 1 &amp; 2) for all land types.</p>
+        <p style={{fontSize:9,color:'#9ca3af',marginBottom:6}}>Opt 1 &amp; 2 · all land types</p>
 
-        {/* Boundary inputs — clean inline */}
-        <div style={{background:'#f8fafc',borderRadius:6,padding:'8px',marginBottom:10}}>
-          <p style={{fontSize:9,fontWeight:700,color:'#374151',margin:'0 0 6px'}}>Slab Boundaries (sqm)</p>
-          <div style={{display:'flex',flexDirection:'column',gap:4}}>
-            {[0,1,2].map(function(i){
-              const lbl = ['Slab I  → II','Slab II → III','Slab III→ IV'][i];
+        {/* Boundaries — compact 2-col grid */}
+        <div style={{background:'#f1f5f9',borderRadius:5,padding:'6px 7px',marginBottom:7}}>
+          <p style={{fontSize:9,fontWeight:700,color:'#374151',margin:'0 0 5px'}}>Boundaries (sqm)</p>
+          <div style={{display:'grid',gridTemplateColumns:'auto 1fr',rowGap:3,columnGap:6,alignItems:'center'}}>
+            {[['I→II',0],['II→III',1],['III→IV',2]].map(function(pair){
               return (
-                <div key={i} style={{display:'flex',alignItems:'center',justifyContent:'space-between',gap:6}}>
-                  <span style={{fontSize:10,color:'#6b7280',fontFamily:'monospace',whiteSpace:'nowrap'}}>{lbl}</span>
-                  <input type="number" style={Object.assign({},INP,{width:90,textAlign:'right'})} value={c.slabBounds[i]} onChange={function(e){updArr('slabBounds',i)(+e.target.value);}}/>
-                </div>
+                <Fragment key={pair[0]}>
+                  <span style={{fontSize:9,color:'#6b7280',fontFamily:'monospace',whiteSpace:'nowrap'}}>{pair[0]}</span>
+                  <input type="number"
+                    style={{fontSize:10,padding:'2px 5px',border:'1px solid #d1d5db',borderRadius:3,width:'100%',boxSizing:'border-box',textAlign:'right',color:'#111',background:'#fff'}}
+                    value={c.slabBounds[pair[1]]}
+                    onChange={function(e){updArr('slabBounds',pair[1])(+e.target.value);}}/>
+                </Fragment>
               );
             })}
           </div>
         </div>
 
-        {/* Slab table — clean rows */}
-        <div style={{background:'#f8fafc',borderRadius:6,padding:'8px'}}>
-          <p style={{fontSize:9,fontWeight:700,color:'#374151',margin:'0 0 6px'}}>Rent % &amp; Utilisation Factor per Slab</p>
-          <table style={{width:'100%',borderCollapse:'collapse'}}>
-            <thead>
-              <tr>
-                {['Slab','Range','Rent %','Util %'].map(function(h){
-                  return <th key={h} style={{fontSize:9,fontWeight:700,color:'#9ca3af',padding:'3px 4px',textAlign:h==='Rent %'||h==='Util %'?'center':'left',borderBottom:'1px solid #e5e7eb'}}>{h}</th>;
-                })}
-              </tr>
-            </thead>
-            <tbody>
-              {['I','II','III','IV'].map(function(l,i){
-                const colors = ['#1e40af','#065f46','#92400e','#991b1b'];
-                const bgs    = ['#dbeafe','#d1fae5','#fef3c7','#fee2e2'];
-                const lo = i===0?'0':(c.slabBounds[i-1]/1000>=1?(c.slabBounds[i-1]/1000).toFixed(0)+'k':c.slabBounds[i-1]);
-                const hi = i===3?'∞':(c.slabBounds[i]/1000>=1?(c.slabBounds[i]/1000).toFixed(0)+'k':c.slabBounds[i]);
-                return (
-                  <tr key={l}>
-                    <td style={{padding:'4px',paddingTop:6}}>
-                      <span style={badge(colors[i],bgs[i])}>{'S'+l}</span>
-                    </td>
-                    <td style={{padding:'4px',fontSize:9,color:'#6b7280',fontFamily:'monospace',whiteSpace:'nowrap'}}>{lo}–{hi}</td>
-                    <td style={{padding:'4px'}}>
-                      <div style={{display:'flex',alignItems:'center',gap:3}}>
-                        <input type="range" min={0} max={150} step={5} value={c.slabPcts[i]}
-                          onChange={function(e){updArr('slabPcts',i)(+e.target.value);}}
-                          style={{width:60,accentColor:colors[i]}}/>
-                        <span style={{fontSize:10,fontWeight:700,color:colors[i],minWidth:28,textAlign:'right'}}>{c.slabPcts[i]}%</span>
-                      </div>
-                    </td>
-                    <td style={{padding:'4px'}}>
-                      <div style={{display:'flex',alignItems:'center',gap:3}}>
-                        <input type="range" min={10} max={100} step={5} value={c.slabUF[i]}
-                          onChange={function(e){updArr('slabUF',i)(+e.target.value);}}
-                          style={{width:60,accentColor:'#6b7280'}}/>
-                        <span style={{fontSize:10,fontWeight:700,color:'#374151',minWidth:28,textAlign:'right'}}>{c.slabUF[i]}%</span>
-                      </div>
-                    </td>
-                  </tr>
-                );
-              })}
-            </tbody>
-          </table>
-        </div>
+        {/* Per-slab cards — 2-col grid for sliders */}
+        <p style={{fontSize:9,fontWeight:700,color:'#374151',margin:'0 0 4px'}}>Rent % &amp; Utilisation per Slab</p>
+        {['I','II','III','IV'].map(function(l,i){
+          const colors = ['#1e40af','#065f46','#92400e','#991b1b'];
+          const bgs    = ['#dbeafe','#d1fae5','#fef3c7','#fee2e2'];
+          const lo = i===0?'0':(c.slabBounds[i-1]>=1000?(c.slabBounds[i-1]/1000).toFixed(0)+'k':c.slabBounds[i-1]);
+          const hi = i===3?'∞':(c.slabBounds[i]>=1000?(c.slabBounds[i]/1000).toFixed(0)+'k':c.slabBounds[i]);
+          return (
+            <div key={l} style={{marginBottom:4,padding:'5px 7px',background:'#f8fafc',borderRadius:5,border:'1px solid #e5e7eb'}}>
+              {/* Badge + range header */}
+              <div style={{display:'flex',alignItems:'center',gap:5,marginBottom:4}}>
+                <span style={badge(colors[i],bgs[i])}>S{l}</span>
+                <span style={{fontSize:9,color:'#6b7280',fontFamily:'monospace'}}>{lo} – {hi} sqm</span>
+              </div>
+              {/* Two-column slider grid — equal width, no overflow */}
+              <div style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:6}}>
+                <div>
+                  <p style={{fontSize:8,color:'#9ca3af',margin:'0 0 2px',fontWeight:600}}>Rent %</p>
+                  <div style={{display:'flex',alignItems:'center',gap:3}}>
+                    <input type="range" min={0} max={150} step={5} value={c.slabPcts[i]}
+                      onChange={function(e){updArr('slabPcts',i)(+e.target.value);}}
+                      style={{flex:1,minWidth:0,accentColor:colors[i]}}/>
+                    <span style={{fontSize:10,fontWeight:700,color:colors[i],width:30,textAlign:'right',flexShrink:0}}>{c.slabPcts[i]}%</span>
+                  </div>
+                </div>
+                <div>
+                  <p style={{fontSize:8,color:'#9ca3af',margin:'0 0 2px',fontWeight:600}}>Util %</p>
+                  <div style={{display:'flex',alignItems:'center',gap:3}}>
+                    <input type="range" min={10} max={100} step={5} value={c.slabUF[i]}
+                      onChange={function(e){updArr('slabUF',i)(+e.target.value);}}
+                      style={{flex:1,minWidth:0,accentColor:'#6b7280'}}/>
+                    <span style={{fontSize:10,fontWeight:700,color:'#374151',width:30,textAlign:'right',flexShrink:0}}>{c.slabUF[i]}%</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          );
+        })}
       </CPSec>
 
       {/* D — Fresh Valuation % — DYNAMIC with user input */}
@@ -903,7 +898,70 @@ function DetailedMatrix({ computed, onRowClick }) {
 // ═══════════════════════════════════════════════════════════════════
 // MAIN APP
 // ═══════════════════════════════════════════════════════════════════
+// ═══════════════════════════════════════════════════════════════════
+// PASSWORD GATE
+// ═══════════════════════════════════════════════════════════════════
+const CORRECT_PWD = 'gmb2026';
+
+function PasswordGate({ onUnlock }) {
+  const [pwd, setPwd]   = useState('');
+  const [err, setErr]   = useState(false);
+  const [show, setShow] = useState(false);
+
+  function attempt() {
+    if (pwd === CORRECT_PWD) { onUnlock(); }
+    else { setErr(true); setPwd(''); setTimeout(function(){ setErr(false); }, 2000); }
+  }
+  function onKey(e) { if (e.key === 'Enter') attempt(); }
+
+  return (
+    <div style={{minHeight:'100vh',background:'#0f172a',display:'flex',alignItems:'center',justifyContent:'center',fontFamily:"'Inter',system-ui,sans-serif"}}>
+      <div style={{background:'#fff',borderRadius:14,padding:'2.5rem 2rem',width:340,boxShadow:'0 25px 60px rgba(0,0,0,0.4)',textAlign:'center'}}>
+        {/* Logo area */}
+        <div style={{width:60,height:60,background:'#1e3a8a',borderRadius:14,margin:'0 auto 16px',display:'flex',alignItems:'center',justifyContent:'center'}}>
+          <span style={{fontSize:28}}>⚓</span>
+        </div>
+        <p style={{fontSize:16,fontWeight:800,color:'#111',margin:'0 0 4px'}}>GMB Land Policy Dashboard</p>
+        <p style={{fontSize:11,color:'#6b7280',margin:'0 0 24px'}}>Gujarat Maritime Board — Restricted Access</p>
+
+        {/* Input */}
+        <div style={{position:'relative',marginBottom:12}}>
+          <input
+            type={show ? 'text' : 'password'}
+            placeholder="Enter access password"
+            value={pwd}
+            onChange={function(e){ setPwd(e.target.value); setErr(false); }}
+            onKeyDown={onKey}
+            style={{width:'100%',boxSizing:'border-box',padding:'10px 40px 10px 14px',fontSize:13,border:err?'2px solid #dc2626':'2px solid #e5e7eb',borderRadius:7,outline:'none',color:'#111',background:err?'#fff5f5':'#fff',transition:'border 0.2s'}}
+            autoFocus/>
+          <button onClick={function(){setShow(function(s){return !s;});}}
+            style={{position:'absolute',right:10,top:'50%',transform:'translateY(-50%)',background:'none',border:'none',cursor:'pointer',fontSize:14,color:'#9ca3af',padding:0}}>
+            {show ? '🙈' : '👁'}
+          </button>
+        </div>
+
+        {err && (
+          <div style={{background:'#fee2e2',border:'1px solid #fca5a5',borderRadius:6,padding:'6px 10px',marginBottom:10,fontSize:11,color:'#991b1b',fontWeight:600}}>
+            ✗ Incorrect password. Please try again.
+          </div>
+        )}
+
+        <button onClick={attempt}
+          style={{width:'100%',padding:'10px',background:'#1e3a8a',color:'#fff',border:'none',borderRadius:7,fontSize:13,fontWeight:700,cursor:'pointer',letterSpacing:'0.02em'}}>
+          Access Dashboard →
+        </button>
+
+        <p style={{fontSize:9,color:'#d1d5db',marginTop:16,lineHeight:1.5}}>
+          Authorised GMB personnel only · Government of Gujarat<br/>
+          Ports &amp; Transport Department
+        </p>
+      </div>
+    </div>
+  );
+}
+
 export default function App() {
+  const [unlocked, setUnlocked] = useState(false);
   const [ctrl,  setCtrl]  = useState(DEF_CTRL);
   const [plots, setPlots] = useState(INIT_PLOTS);
   const [editP, setEditP] = useState(null);
@@ -989,6 +1047,10 @@ export default function App() {
   }
 
   const TABS=['📊 Revenue Overview','📋 Detailed Matrix'];
+
+  if (!unlocked) {
+    return <PasswordGate onUnlock={function(){ setUnlocked(true); }}/>;
+  }
 
   return (
     <div style={{background:'#f1f5f9',minHeight:'100vh',fontFamily:"'Inter',system-ui,sans-serif",fontSize:12}}>
