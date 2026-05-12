@@ -388,6 +388,31 @@ const RAW = [
 [109265,4,1,"Alcock Ashdown (Gujarat) Ltd",2007,2037,0.00,1092650]
 ];
 
+// ═══════════════════════════════════════════════════════════════════
+// SCENARIO & TYPE CONSTANTS
+// ═══════════════════════════════════════════════════════════════════
+const SCEN_KEYS = ['sopc_cur','sopc_rev','opt1','opt2','opt3','opt4','opt5','opt6'];
+const SCEN_META = {
+  sopc_cur:{label:'SoPC Current',       short:'SoPC Cur', color:'#1e40af',bg:'#dbeafe', rec:false},
+  sopc_rev:{label:'SoPC Revised',       short:'SoPC Rev', color:'#1d4ed8',bg:'#bfdbfe', rec:false},
+  opt1:    {label:'Opt 1 — Fresh Val',  short:'Opt 1',    color:'#6d28d9',bg:'#ede9fe', rec:false},
+  opt2:    {label:'Opt 2 — 40% Factor', short:'Opt 2',    color:'#7c3aed',bg:'#f5f3ff', rec:false},
+  opt3:    {label:'Opt 3 — Continue',   short:'Opt 3',    color:'#065f46',bg:'#d1fae5', rec:false},
+  opt4:    {label:'Opt 4 — Last+WPI',   short:'Opt 4',    color:'#0f766e',bg:'#ccfbf1', rec:false},
+  opt5:    {label:'Opt 5 — 50% Hike',   short:'Opt 5',    color:'#92400e',bg:'#fef3c7', rec:false},
+  opt6:    {label:'Opt 6 — Block ✓ REC',short:'Opt 6 ✓',  color:'#14532d',bg:'#bbf7d0', rec:true},
+};
+const TYPE_META = {
+  sopc:               {label:'SoPC Ordinary',      color:'#1e40af',bg:'#dbeafe'},
+  lpa:                {label:'LPA Firm Land',       color:'#6d28d9',bg:'#ede9fe'},
+  reclaimed_pre2018:  {label:'Reclaimed Pre-2018',  color:'#92400e',bg:'#fef3c7'},
+  reclaimed_post2018: {label:'Reclaimed Post-2018', color:'#065f46',bg:'#d1fae5'},
+};
+const STATUS_META = {
+  active:   {label:'Active',   color:'#065f46',bg:'#d1fae5'},
+  expiring: {label:'<5 yrs',   color:'#92400e',bg:'#fef3c7'},
+  expired:  {label:'Expired',  color:'#991b1b',bg:'#fee2e2'},
+};
 
 // ═══════════════════════════════════════════════════════════════════
 // UTILITIES
