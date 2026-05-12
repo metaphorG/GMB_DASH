@@ -1104,6 +1104,200 @@ function RevenueOverview({ computed, bifurc, ctrl }) {
 
   const sm30 = SCEN_META[selectedScen];
 
+  return (
+    <div>
+      {/* Hero */}
+      <div style={{background:'linear-gradient(135deg,#1e3a8a,#1e40af)',borderRadius:10,padding:'1.25rem 1.5rem',marginBottom:12,color:'#fff'}}>
+        <p style={{fontSize:11,color:'#93c5fd',margin:'0 0 4px',fontWeight:600,letterSpacing:'0.05em'}}>CURRENT ANNUAL REVENUE — ALL {computed.length} PLOTS</p>
+        <p style={{fontSize:32,fontWeight:800,margin:'0 0 6px',letterSpacing:'-0.02em'}}>{fmtCr(existingTotal)}</p>
+        <div style={{display:'flex',gap:16,flexWrap:'wrap'}}>
+          {['sopc','lpa','reclaimed_pre2018','reclaimed_post2018'].map(function(t){
+            const d=bifurc[t]; if(!d)return null;
+            const tm=TYPE_META[t];
+            return (
+              <div key={t} style={{borderLeft:'2px solid rgba(255,255,255,0.3)',paddingLeft:10}}>
+                <p style={{fontSize:9,color:'#93c5fd',margin:0}}>{tm.label}</p>
+                <p style={{fontSize:14,fontWeight:700,margin:'2px 0 0'}}>{fmtCr(d.existing)}</p>
+                <p style={{fontSize:9,color:'#bfdbfe',margin:0}}>{d.count} plots</p>
+              </div>
+            );
+          })}
+        </div>
+      </div>
+
+      {/* Scenario cards — clickable */}
+      <p style={{fontSize:11,fontWeight:700,color:'#374151',margin:'0 0 4px'}}>Year 1 Annual Revenue — All 8 Policy Scenarios</p>
+      <p style={{fontSize:9,color:'#9ca3af',margin:'0 0 8px'}}>Click any tile to see its Top-5 impact plots below.</p>
+      <div style={{display:'grid',gridTemplateColumns:'repeat(4,minmax(0,1fr))',gap:8,marginBottom:14}}>
+        {SCEN_KEYS.map(function(k){
+          const sm=SCEN_META[k];
+          const v=bifurc.total?bifurc.total[k]:0;
+          const diff=v-existingTotal;
+          const isPos=diff>=0;
+          const isRec=sm.rec;
+          const isSel=selectedScen===k;
+          return (
+            <div key={k} onClick={function(){setSelectedScen(k);}}
+              style={{background:'#fff',border:isSel?'2px solid '+sm.color:isRec?'2px solid #14532d':'1px solid #e5e7eb',
+                borderRadius:8,padding:'0.75rem',cursor:'pointer',
+                boxShadow:isSel?'0 4px 14px '+sm.color+'44':isRec?'0 4px 12px rgba(20,83,45,0.15)':'none',
+                transform:isSel?'translateY(-2px)':'none',transition:'all 0.15s'}}>
+              <div style={{display:'flex',justifyContent:'space-between',alignItems:'flex-start',marginBottom:6}}>
+                <span style={badge(sm.color,sm.bg)}>{sm.short}</span>
+                <div style={{display:'flex',gap:4}}>
+                  {isRec&&<span style={{fontSize:8,background:'#14532d',color:'#fff',padding:'1px 5px',borderRadius:8,fontWeight:700}}>REC</span>}
+                  {isSel&&<span style={{fontSize:8,background:sm.color,color:'#fff',padding:'1px 5px',borderRadius:8,fontWeight:700}}>▲</span>}
+                </div>
+              </div>
+              <p style={{fontSize:9,color:'#6b7280',margin:'0 0 4px',lineHeight:1.3}}>{sm.label}</p>
+              <p style={{fontSize:20,fontWeight:800,margin:'0 0 4px',color:sm.color}}>{fmtCr(v)}</p>
+              <div style={{display:'flex',gap:6,alignItems:'center'}}>
+                <span style={{fontSize:10,fontWeight:700,color:isPos?'#065f46':'#991b1b'}}>{fmtChg(v,existingTotal)}</span>
+                <span style={{fontSize:9,color:'#9ca3af'}}>vs existing</span>
+              </div>
+              <div style={{height:4,background:'#f3f4f6',borderRadius:2,marginTop:6}}>
+                <div style={{height:'100%',background:sm.color,borderRadius:2,width:Math.max(4,(v/Math.max(maxVal,1))*100)+'%',transition:'width 0.3s'}}/>
+              </div>
+              <div style={{marginTop:4}}>
+                <span style={{fontSize:9,color:isPos?'#065f46':'#991b1b',fontWeight:600}}>Δ {diff>=0?'+':''}{fmtCr(Math.abs(diff))}</span>
+              </div>
+            </div>
+          );
+        })}
+      </div>
+
+      {/* Top impact — dynamic */}
+      <div style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:10,marginBottom:12}}>
+        <div style={{background:'#fff',border:'1px solid #e5e7eb',borderRadius:8,padding:'0.875rem'}}>
+          <p style={{fontSize:11,fontWeight:700,color:'#065f46',margin:'0 0 2px'}}>↑ Top 5 — Highest Revenue Gain</p>
+          <p style={{fontSize:9,color:'#9ca3af',margin:'0 0 8px'}}>vs Existing · <span style={{color:sm30.color,fontWeight:700}}>{sm30.label}</span></p>
+          {topGain.map(function(row,i){
+            const diff=row.rents[selectedScen]-row.existing;
+            return (
+              <div key={row.p.id} style={{display:'flex',alignItems:'center',justifyContent:'space-between',padding:'4px 0',borderBottom:i<4?'1px solid #f3f4f6':'none'}}>
+                <div style={{flex:1,minWidth:0}}>
+                  <p style={{fontSize:10,fontWeight:600,margin:0,overflow:'hidden',textOverflow:'ellipsis',whiteSpace:'nowrap',color:'#111'}}>{row.p.name}</p>
+                  <p style={{fontSize:9,color:'#6b7280',margin:0}}>{row.p.port} · {fmtA(row.p.area)}</p>
+                </div>
+                <div style={{textAlign:'right',flexShrink:0,marginLeft:8}}>
+                  <p style={{fontSize:11,fontWeight:700,color:'#065f46',margin:0}}>{diff>=0?'+':''}{fmtCr(Math.abs(diff))}</p>
+                  <p style={{fontSize:9,color:'#9ca3af',margin:0}}>{fmtChg(row.rents[selectedScen],row.existing)}</p>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+        <div style={{background:'#fff',border:'1px solid #e5e7eb',borderRadius:8,padding:'0.875rem'}}>
+          <p style={{fontSize:11,fontWeight:700,color:'#991b1b',margin:'0 0 2px'}}>↓ Top 5 — Highest Revenue Reduction</p>
+          <p style={{fontSize:9,color:'#9ca3af',margin:'0 0 8px'}}>vs Existing · <span style={{color:sm30.color,fontWeight:700}}>{sm30.label}</span></p>
+          {topLoss.map(function(row,i){
+            const diff=row.rents[selectedScen]-row.existing;
+            return (
+              <div key={row.p.id} style={{display:'flex',alignItems:'center',justifyContent:'space-between',padding:'4px 0',borderBottom:i<4?'1px solid #f3f4f6':'none'}}>
+                <div style={{flex:1,minWidth:0}}>
+                  <p style={{fontSize:10,fontWeight:600,margin:0,overflow:'hidden',textOverflow:'ellipsis',whiteSpace:'nowrap',color:'#111'}}>{row.p.name}</p>
+                  <p style={{fontSize:9,color:'#6b7280',margin:0}}>{row.p.port} · {fmtA(row.p.area)}</p>
+                </div>
+                <div style={{textAlign:'right',flexShrink:0,marginLeft:8}}>
+                  <p style={{fontSize:11,fontWeight:700,color:'#991b1b',margin:0}}>{fmtCr(diff)}</p>
+                  <p style={{fontSize:9,color:'#9ca3af',margin:0}}>{fmtChg(row.rents[selectedScen],row.existing)}</p>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      </div>
+
+      {/* Land type bifurcation */}
+      <div style={{background:'#fff',border:'1px solid #e5e7eb',borderRadius:8,padding:'1rem',marginBottom:12}}>
+        <p style={{fontSize:11,fontWeight:700,color:'#374151',margin:'0 0 8px'}}>Revenue Bifurcation — Land Type × Scenario (₹ Crore)</p>
+        <div style={{overflowX:'auto'}}>
+          <table style={{width:'100%',borderCollapse:'collapse',fontSize:10}}>
+            <thead>
+              <tr>
+                <th style={Object.assign({},TH,{minWidth:110})}>Land Type</th>
+                <th style={Object.assign({},TH,{minWidth:40,textAlign:'right'})}>Plots</th>
+                <th style={Object.assign({},TH,{minWidth:70,textAlign:'right',background:'#dbeafe',color:'#1e40af'})}>Existing</th>
+                {SCEN_KEYS.map(function(k){return <th key={k} style={Object.assign({},TH,{minWidth:60,textAlign:'right',background:SCEN_META[k].bg,color:SCEN_META[k].color})}>{SCEN_META[k].short}</th>;})}
+              </tr>
+            </thead>
+            <tbody>
+              {['sopc','lpa','reclaimed_pre2018','reclaimed_post2018','total'].map(function(t,ti){
+                const d=bifurc[t]; if(!d)return null;
+                const isTotal=t==='total';
+                const tm=TYPE_META[t];
+                return (
+                  <tr key={t} style={{background:isTotal?'#f0f9ff':ti%2===0?'#fafafa':'#fff',fontWeight:isTotal?700:400}}>
+                    <td style={Object.assign({},TD,{fontWeight:isTotal?700:500})}>
+                      {tm?<span style={badge(tm.color,tm.bg)}>{tm.label}</span>:<strong>TOTAL</strong>}
+                    </td>
+                    <td style={Object.assign({},TD,{textAlign:'right',color:'#9ca3af'})}>{d.count}</td>
+                    <td style={Object.assign({},TD,{textAlign:'right',fontFamily:'monospace',background:'#eff6ff',fontWeight:isTotal?700:600})}>{fmtCr(d.existing)}</td>
+                    {SCEN_KEYS.map(function(k){
+                      const diff=d[k]-d.existing;const isPos=diff>=0;
+                      return (
+                        <td key={k} style={Object.assign({},TD,{textAlign:'right',background:SCEN_META[k].bg+'33'})}>
+                          <div style={{fontFamily:'monospace',fontWeight:isTotal?700:500}}>{fmtCr(d[k])}</div>
+                          {!isTotal&&<div style={{fontSize:8,color:isPos?'#065f46':'#991b1b',fontWeight:700}}>{fmtChg(d[k],d.existing)}</div>}
+                        </td>
+                      );
+                    })}
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      {/* 30-Year Revenue Projection */}
+      <div style={{background:'#fff',border:'1px solid #e5e7eb',borderRadius:8,padding:'1rem',marginBottom:12}}>
+        <p style={{fontSize:11,fontWeight:700,color:'#374151',margin:'0 0 2px'}}>30-Year Revenue Projection — All 8 Scenarios</p>
+        <p style={{fontSize:9,color:'#9ca3af',margin:'0 0 10px'}}>Annual revenue escalated at {(g*100).toFixed(2)}% p.a. · Values in ₹ Crore · Existing = flat baseline</p>
+        <div style={{overflowX:'auto'}}>
+          <table style={{borderCollapse:'collapse',fontSize:9,minWidth:900}}>
+            <thead>
+              <tr>
+                <th style={Object.assign({},TH,{minWidth:38,position:'sticky',left:0,zIndex:2,background:'#f9fafb'})}>Year</th>
+                <th style={Object.assign({},TH,{minWidth:58,textAlign:'right',background:'#eff6ff',color:'#1e40af'})}>Existing</th>
+                {SCEN_KEYS.map(function(k){return <th key={k} style={Object.assign({},TH,{minWidth:58,textAlign:'right',background:SCEN_META[k].bg,color:SCEN_META[k].color})}>{SCEN_META[k].short}</th>;})}
+              </tr>
+            </thead>
+            <tbody>
+              {Array.from({length:projYears},function(_,i){
+                const yr=CY+1+i;
+                const bg=i%2===0?'#fafafa':'#fff';
+                return (
+                  <tr key={yr} style={{background:bg}}>
+                    <td style={Object.assign({},TD,{fontWeight:600,color:'#374151',position:'sticky',left:0,background:bg})}>{yr}</td>
+                    <td style={Object.assign({},TD,{textAlign:'right',fontFamily:'monospace',background:'#eff6ff',color:'#1e40af',fontWeight:500})}>{fmtCr(projExisting[i])}</td>
+                    {SCEN_KEYS.map(function(k){
+                      const v=projData[k][i];
+                      const isPos=v>=projExisting[i];
+                      return <td key={k} style={Object.assign({},TD,{textAlign:'right',fontFamily:'monospace',background:SCEN_META[k].bg+'22',color:isPos?'#065f46':'#991b1b'})}>{fmtCr(v)}</td>;
+                    })}
+                  </tr>
+                );
+              })}
+              <tr style={{background:'#1e3a8a'}}>
+                <td style={Object.assign({},TD,{color:'#93c5fd',fontWeight:700,position:'sticky',left:0,background:'#1e3a8a',fontSize:9})}>30-Yr<br/>Cum.</td>
+                <td style={Object.assign({},TD,{textAlign:'right',fontFamily:'monospace',color:'#fff',fontWeight:700})}>{fmtCr(cumSum(projExisting)[29])}</td>
+                {SCEN_KEYS.map(function(k){
+                  const cum=cumSum(projData[k])[29];
+                  const base=cumSum(projExisting)[29];
+                  const isPos=cum>=base;
+                  return <td key={k} style={Object.assign({},TD,{textAlign:'right',fontFamily:'monospace',color:isPos?'#bbf7d0':'#fca5a5',fontWeight:700})}>{fmtCr(cum)}</td>;
+                })}
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <p style={{fontSize:8,color:'#9ca3af',margin:'6px 0 0'}}>Note: Projection applies uniform escalation to Year-1 aggregate totals. Actual revenue will vary with individual lease renewals, new allotments, and policy implementation timing.</p>
+      </div>
+    </div>
+  );
+}
+
 
 // ═══════════════════════════════════════════════════════════════════
 // TAB 2 — DETAILED MATRIX
@@ -1133,31 +1327,6 @@ function DetailedMatrix({ computed, onRowClick, ctrl }) {
     else if(sortK==='expiry')   arr=arr.slice().sort(function(a,b){return a.p.yearsLeft-b.p.yearsLeft;});
     return arr;
   },[computed,filt,search,sortK,ctrl]);
-
-  const paged=filtered.slice(pg*PGS,(pg+1)*PGS);
-  const totalPg=Math.ceil(filtered.length/PGS);
-
-  function setF(k){return function(v){setFilt(function(f){return Object.assign({},f,{[k]:v});});setPg(0);};}
-  const [search,setSearch]=useState('');
-  const [filt,setFilt]=useState({land:'All',port:'All',status:'All',impact:'All'});
-  const [sortK,setSortK]=useState('impact');
-  const [pg,setPg]=useState(0);
-  const PGS=25;
-
-  const filtered=useMemo(function(){
-    let arr=computed;
-    if(filt.land!=='All')arr=arr.filter(function(r){return r.p.landType===filt.land;});
-    if(filt.port!=='All')arr=arr.filter(function(r){return r.p.port===filt.port;});
-    if(filt.status!=='All')arr=arr.filter(function(r){return r.p.status===filt.status;});
-    if(filt.impact==='Higher')arr=arr.filter(function(r){return r.rents.opt6>r.existing+1;});
-    if(filt.impact==='Lower') arr=arr.filter(function(r){return r.rents.opt6<r.existing-1;});
-    if(search){const q=search.toLowerCase();arr=arr.filter(function(r){return r.p.name.toLowerCase().includes(q)||r.p.port.toLowerCase().includes(q);});}
-    if(sortK==='impact')   arr=arr.slice().sort(function(a,b){return Math.abs(b.rents.opt6-b.existing)-Math.abs(a.rents.opt6-a.existing);});
-    else if(sortK==='area')     arr=arr.slice().sort(function(a,b){return b.p.area-a.p.area;});
-    else if(sortK==='existing') arr=arr.slice().sort(function(a,b){return b.existing-a.existing;});
-    else if(sortK==='expiry')   arr=arr.slice().sort(function(a,b){return a.p.yearsLeft-b.p.yearsLeft;});
-    return arr;
-  },[computed,filt,search,sortK]);
 
   const paged=filtered.slice(pg*PGS,(pg+1)*PGS);
   const totalPg=Math.ceil(filtered.length/PGS);
