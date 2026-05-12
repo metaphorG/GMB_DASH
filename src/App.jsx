@@ -580,7 +580,7 @@ function RevenueOverview({ computed, bifurc, ctrl }) {
     <div>
       {/* Hero — Existing Revenue */}
       <div style={{background:'linear-gradient(135deg,#1e3a8a,#1e40af)',borderRadius:10,padding:'1.25rem 1.5rem',marginBottom:12,color:'#fff'}}>
-        <p style={{fontSize:11,color:'#93c5fd',margin:'0 0 4px',fontWeight:600,letterSpacing:'0.05em'}}>CURRENT ANNUAL REVENUE — ALL 407 PLOTS</p>
+        <p style={{fontSize:11,color:'#93c5fd',margin:'0 0 4px',fontWeight:600,letterSpacing:'0.05em'}}>CURRENT ANNUAL REVENUE</p>
         <p style={{fontSize:32,fontWeight:800,margin:'0 0 6px',letterSpacing:'-0.02em'}}>{fmtCr(existingTotal)}</p>
         <div style={{display:'flex',gap:16,flexWrap:'wrap'}}>
           {['sopc','lpa','reclaimed_pre2018','reclaimed_post2018'].map(function(t){
