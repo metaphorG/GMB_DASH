@@ -4,7 +4,7 @@ import { useState, useMemo, useCallback, Fragment, useEffect, useRef } from "rea
 // ═══════════════════════════════════════════════════════════════════
 // JSONBIN CONFIGURATION — paste your values here
 // ═══════════════════════════════════════════════════════════════════
-const JSONBIN_ID  = '6a035267c0954111d81268ad';      // e.g. '6830abc123def456'
+const JSONBIN_ID  = '6a0367b8250b1311c33de7a7';      // e.g. '6830abc123def456'
 const JSONBIN_KEY = '$2a$10$F1LfGWg51BWexG/3aptWR.9LiWTSjKP5ozoASlZydrByLgYsa5wSy';  // e.g. '$2b$10$abc...'
 const BIN_URL     = 'https://api.jsonbin.io/v3/b/' + JSONBIN_ID;
 const HDR_READ    = { 'X-Master-Key': JSONBIN_KEY, 'X-Bin-Meta': 'false' };
