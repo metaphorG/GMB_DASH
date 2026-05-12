@@ -3,8 +3,8 @@ import { useState, useMemo, useCallback, Fragment, useEffect, useRef } from "rea
 // ═══════════════════════════════════════════════════════════════════
 // JSONBIN CONFIGURATION — paste your values here
 // ═══════════════════════════════════════════════════════════════════
-const JSONBIN_ID  = 'YOUR_BIN_ID_HERE';      // e.g. '6830abc123def456'
-const JSONBIN_KEY = 'YOUR_MASTER_KEY_HERE';  // e.g. '$2b$10$abc...'
+const JSONBIN_ID  = '6a02d428c0954111d80ef22c';      // e.g. '6830abc123def456'
+const JSONBIN_KEY = '$2a$10$F1LfGWg51BWexG/3aptWR.9LiWTSjKP5ozoASlZydrByLgYsa5wSy';  // e.g. '$2b$10$abc...'
 const BIN_URL     = 'https://api.jsonbin.io/v3/b/' + JSONBIN_ID;
 const HDR_READ    = { 'X-Master-Key': JSONBIN_KEY, 'X-Bin-Meta': 'false' };
 const HDR_WRITE   = { 'Content-Type': 'application/json', 'X-Master-Key': JSONBIN_KEY };
