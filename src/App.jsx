@@ -1,107 +1,4 @@
-// ================================================================
-// GMB Land Policy Dashboard — v3  (Supabase Edition)
-// ================================================================
-// SETUP: Put your Supabase URL and anon key in the two constants
-// below before deploying. Get them from:
-//   Supabase Dashboard → Project Settings → API
-// ================================================================
-const SUPABASE_URL  = 'https://zncvxvmqtnpofwibuhfl.supabase.co';
-const SUPABASE_ANON = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InpuY3Z4dm1xdG5wb2Z3aWJ1aGZsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzg1MDczODksImV4cCI6MjA5NDA4MzM4OX0.UsqnP6IDDEYnFq7-4peselbsqFKycUVRXyZaJcn4hJY';
-
-// Lightweight Supabase REST helper — no SDK needed
-const sb = {
-  async get(table, query = '') {
-    const res = await fetch(`${SUPABASE_URL}/rest/v1/${table}?${query}`, {
-      headers: {
-        apikey: SUPABASE_ANON,
-        Authorization: `Bearer ${SUPABASE_ANON}`,
-      },
-    });
-    if (!res.ok) throw new Error(await res.text());
-    return res.json();
-  },
-  async insert(table, data) {
-    const res = await fetch(`${SUPABASE_URL}/rest/v1/${table}`, {
-      method: 'POST',
-      headers: {
-        apikey: SUPABASE_ANON,
-        Authorization: `Bearer ${SUPABASE_ANON}`,
-        'Content-Type': 'application/json',
-        Prefer: 'return=representation',
-      },
-      body: JSON.stringify(data),
-    });
-    if (!res.ok) throw new Error(await res.text());
-    return res.json();
-  },
-  async update(table, id, data) {
-    const res = await fetch(`${SUPABASE_URL}/rest/v1/${table}?id=eq.${id}`, {
-      method: 'PATCH',
-      headers: {
-        apikey: SUPABASE_ANON,
-        Authorization: `Bearer ${SUPABASE_ANON}`,
-        'Content-Type': 'application/json',
-        Prefer: 'return=representation',
-      },
-      body: JSON.stringify(data),
-    });
-    if (!res.ok) throw new Error(await res.text());
-    return res.json();
-  },
-  async delete(table, id) {
-    const res = await fetch(`${SUPABASE_URL}/rest/v1/${table}?id=eq.${id}`, {
-      method: 'DELETE',
-      headers: {
-        apikey: SUPABASE_ANON,
-        Authorization: `Bearer ${SUPABASE_ANON}`,
-      },
-    });
-    if (!res.ok) throw new Error(await res.text());
-  },
-};
-
-// Convert DB row (snake_case) → app plot object (camelCase)
-function dbToPlot(row) {
-  return {
-    id:          row.id,
-    name:        row.name,
-    port:        row.port,
-    portIdx:     row.port_idx,
-    pgIdx:       row.pg_idx,
-    landType:    row.land_type,
-    area:        row.area,
-    currentRent: row.current_rent,
-    leaseStart:  row.lease_start,
-    leaseTerm:   row.lease_term,
-    acqCr:       row.acq_cr,
-    indivVal:    row.indiv_val,
-    acqValPsqm:  row.acq_val_psqm,
-    recYear:     row.rec_year,
-    notes:       row.notes || '',
-  };
-}
-
-// Convert app plot object → DB row
-function plotToDb(p) {
-  return {
-    name:         p.name,
-    port:         p.port,
-    port_idx:     p.portIdx,
-    pg_idx:       p.pgIdx,
-    land_type:    p.landType,
-    area:         p.area,
-    current_rent: p.currentRent,
-    lease_start:  p.leaseStart,
-    lease_term:   p.leaseTerm,
-    acq_cr:       p.acqCr || 0,
-    indiv_val:    p.indivVal || null,
-    acq_val_psqm: p.acqValPsqm || null,
-    rec_year:     p.recYear || null,
-    notes:        p.notes || '',
-  };
-}
-
-import { useState, useMemo, useCallback, useEffect, Fragment } from "react";
+import { useState, useMemo, useCallback, Fragment } from "react";
 
 // ═══════════════════════════════════════════════════════════════════
 // CONSTANTS
@@ -110,6 +7,29 @@ const CY = 2025;
 const PORT_NAMES = ['Alang','Bhavnagar','Jafrabad','Jamnagar','Magdalla','Mandvi','Mangrol','Navlakhi','Okha','Porbandar','Veraval','Dahej','Hazira','Mundra'];
 const PG_IDX = {'Magdalla':0,'Dahej':0,'Hazira':0,'Bhavnagar':1,'Alang':1,'Navlakhi':1,'Jamnagar':2,'Okha':2,'Mundra':2,'Mandvi':2,'Veraval':3,'Porbandar':3,'Mangrol':3,'Jafrabad':3};
 const PG_NAMES = ['South Gujarat Coast','Saurashtra East','Saurashtra West','South Saurashtra'];
+
+const LPA_META = {
+  "GAPL/APSEZL Mundra (3404 Acres)":    {start:2000,term:30,acqCr:7.00,  rec:false},
+  "Hazira Port Pvt Ltd (409 Ha)":        {start:2007,term:30,acqCr:0.00,  rec:true, recYr:2007},
+  "Petronet LNG Limited":                {start:1999,term:30,acqCr:9.70,  rec:false},
+  "APPPL Dahej Plot 1":                  {start:2009,term:30,acqCr:2.71,  rec:false},
+  "APPPL Dahej Plot 2":                  {start:2009,term:30,acqCr:2.31,  rec:false},
+  "Swan LNG Pvt Ltd":                    {start:2017,term:30,acqCr:7.10,  rec:false},
+  "Bhavnagar Port Infra Pvt Ltd":        {start:2024,term:30,acqCr:14.20, rec:false},
+  "Nauyaan Shipyard Pvt Ltd":            {start:2025,term:30,acqCr:14.40, rec:false},
+  "Modest Infrastructure Pvt Ltd":       {start:2007,term:30,acqCr:0.46,  rec:false},
+};
+const LPA_RENT = {
+  "GAPL/APSEZL Mundra (3404 Acres)":10234000,
+  "Hazira Port Pvt Ltd (409 Ha)":409,
+  "Petronet LNG Limited":23436000,
+  "APPPL Dahej Plot 1":23412000,
+  "APPPL Dahej Plot 2":12571000,
+  "Swan LNG Pvt Ltd":68030000,
+  "Bhavnagar Port Infra Pvt Ltd":14798800,
+  "Nauyaan Shipyard Pvt Ltd":14187745,
+  "Modest Infrastructure Pvt Ltd":343800,
+};
 
 const SCEN_KEYS = ['sopc_cur','sopc_rev','opt1','opt2','opt3','opt4','opt5','opt6'];
 const SCEN_META = {
@@ -137,6 +57,26 @@ const TYPE_LABELS = {
   sopc:'SoPC Ordinary', lpa:'LPA Firm Land',
   reclaimed_pre2018:'Reclaimed Pre-2018', reclaimed_post2018:'Reclaimed Post-2018', total:'TOTAL'
 };
+
+// ═══════════════════════════════════════════════════════════════════
+// RAW DATA  [area, portIdx, isLPA, name]
+// ═══════════════════════════════════════════════════════════════════
+const RAW = [
+[800,0,0,"S&S Brothers"],[800,0,0,"Ushmaniya Oxygen"],[600,0,0,"Capital Oxygen"],[600,0,0,"Superior Air Products"],[800,0,0,"Aims Oxygen"],[600,0,0,"Sharma & Co"],[425,0,0,"Indian Red Cross"],[800,0,0,"SBS Bhavnagar"],[875,0,0,"Shirdi Steel Traders"],[875,0,0,"Gupta Steel Bhavnagar"],[240,0,0,"Dr M A Hamidani"],[600,0,0,"Hindustan Gas Indu"],[600,0,0,"Peckok Chemicals"],[800,0,0,"BM Shah Sons"],[300,0,0,"Pravin Vaja"],[304,0,0,"BSNL Alang Tower"],[441,0,0,"Bombay Weighbridge"],[964.5,0,0,"Manoharsinh Chauhan"],[3375,0,0,"Gujarat Gas Ltd"],
+[590,1,0,"Chimanlal N Patel"],[416.58,1,0,"Keshavlal H Patel"],[744,1,0,"Nagindas N Patel"],[919.37,1,0,"JJ Patel Gas Agency"],[75000,1,0,"BVP Products Ltd"],[919.46,1,0,"HP Vitthalpara"],[899.4,1,0,"BK Mansatar"],[836.43,1,0,"HK Kamdar Sons"],[100,1,0,"Union Fair Scale"],[3442.5,1,0,"Mars Metal Oxides"],[928,1,0,"Namrata Gas Agency"],[250.61,1,0,"JM Baxi Co"],[791,1,0,"Jirawala Plastic"],[900,1,0,"Bharat Petroleum Bhvngr"],[196,1,0,"Dhandin Weighbridge"],[1400,1,0,"Sea Land Shipping"],[928,1,0,"Dilipsinh A Gohil"],[960,1,0,"Ushaben R Agrawal"],[2500,1,0,"Laxmi Toughened Glass"],[900,1,0,"Daxaben Manadalia"],[800,1,0,"Shrenik Sales Corp 1"],[2500,1,0,"Bhavna Marine Engg"],[1044,1,0,"Nileshkumar H Patel"],[750,1,0,"Jitendra M Vyas"],[215.8,1,0,"Abdul Razaq Lati"],[1800,1,0,"Mayurdhvajsinh Ghohil"],[682.84,1,0,"Kiritkumar H Patel"],[400,1,0,"Saurashtra Petroleums"],[800,1,0,"Param Plastic Inds"],[1000,1,0,"Police Stn Bhavnagar"],[9058,1,0,"JK Steel Alloys"],[1134,1,0,"Sea Services Pvt Ltd"],[900,1,0,"Heena Gases"],[1000,1,0,"Khamaba Gohil"],[222.71,1,0,"Vishalpara Girishkumar 1"],[155.04,1,0,"Vishalpara Girishkumar 2"],[547.2,1,0,"Nitinbhai Loriya"],[1800,1,0,"Kirit J Bhatt"],[4,1,0,"Reliance Jio Bhv 1"],[9,1,0,"Reliance Jio Bhv 2"],[2100,1,0,"Pravasini Joshi"],[1800,1,0,"Dhirajkumar Rajai"],[700,1,0,"Shrenik Sales Corp 2"],[1250,1,0,"Patanjali Marine Ghogha"],[10000,1,0,"Mahek Agro Mineral"],[1250,1,0,"Maya Marine Logistics"],[47432,1,1,"Bhavnagar Port Infra Pvt Ltd"],
+[450,2,0,"Matsyodhyog Mandali Jafr"],[137,2,0,"Police Sub-Inspector Jafr"],[471120,2,1,"Swan LNG Pvt Ltd"],
+[25,3,0,"Reliance Jio Bedi"],[600,3,0,"Shreeji Shipping NP"],[500,3,0,"Shreeji Shipping Bedi"],[23720,3,0,"Reliance Inds Sikka"],[600,3,0,"NK Parmar Co"],[7170,3,0,"Gujarat State Warehousing"],[25,3,0,"Reliance Jio Rozi"],[25,3,0,"Reliance Jio NP Jmn"],[227120,3,0,"Digvijay Cement Sikka"],[3600,3,0,"Shakti Clearing NP"],[500,3,0,"Vasuki Trade Link"],[55.35,3,0,"Directorate of Lighthouses"],[29071,3,0,"Shakti Clearing Wharf"],[1103.6,3,0,"Veer Dock Company"],[1063.21,3,0,"Custom Agents Assn"],[560,3,0,"Jamnagar Panjrapol 1"],[470,3,0,"Jamnagar Panjrapol 2"],[10156,3,0,"Integrated Proteins"],[750,3,0,"Salaya Machimar Mandli"],[1524,3,0,"Aziz J Charania"],
+[22360,4,0,"Narmada Cement Co"],[210,4,0,"Gayatri Weighbridge Mgd"],[1700,4,0,"Ashwani Shipping Corp"],[300,4,0,"Guj Fisheries Umargam"],[300,4,0,"Guj Fisheries Kosamba"],[288501,4,1,"Nauyaan Shipyard Pvt Ltd"],[11460,4,1,"Modest Infrastructure Pvt Ltd"],
+[1114,5,0,"Hindustan Petroleum Mndv"],[350,5,0,"Nurmamad H Sangani"],[660,5,0,"Gujarat Fisheries Jakhau"],[1225,5,0,"Zarpara Matsyodhyog"],[165,5,0,"Sara Engineering Works"],[38.2,5,0,"BSNL Jakhau"],[1000,5,0,"Adani Port Weighbridge"],
+[1425,6,0,"Kalyan Ice Cold Storage"],
+[1700,7,0,"Shivm Marine Services"],[4740,7,0,"Chaugule Co Salt"],[450,7,0,"Gayatri Weighbridge NLK"],[220,7,0,"BSNL Rajkot Tower"],[300,7,0,"Police Outpost Rajkot"],[233,7,0,"Indus Tower NLK"],
+[400,8,0,"Pavanputra Fish Co-op 1"],[300,8,0,"Pavanputra Fish Co-op 2"],[750,8,0,"Adarsh Fish Co-op 1"],[750,8,0,"Adarsh Fish Co-op 2"],[12270,8,0,"Comm of Fisheries GKU"],[660,8,0,"SBI Okha"],[200,8,0,"Police Station Okha"],[900,8,0,"Coastal Marine Police Okha"],[1032,8,0,"Indian Roadlines Jmn"],
+[256,9,0,"Sagar Sarvodaya Co-op"],[660,9,0,"Premilaben N Lodhari"],[300,9,0,"Associated Transport Co"],[256,9,0,"JaySagar Fishing Co-op"],[434,9,0,"RatnaSagar Ice Factory"],[35.55,9,0,"Nilamben K Kotiya"],[2460,9,0,"Agro Marine Guj Fish"],[459.02,9,0,"SagarSakti Fishing Co-op"],[315,9,0,"Hiren Enterprises"],[1352.81,9,0,"Mustaq Haji Siddik"],[428.41,9,0,"Deep Ice Industries"],[370,9,0,"Arjan Hira Lodhari"],[464,9,0,"Premji Kanji Lodhari 1"],[468,9,0,"Jivan Padhu Masani"],[346,9,0,"Narsi Kanji Jungi"],[601.18,9,0,"Rajmilan Transport"],[1250,9,0,"Suraj Ice Cold Storage"],[120.4,9,0,"SHV Energy LPG"],[371.58,9,0,"Dhansukh V Lodhari 1"],[320,9,0,"Pavanputra Fisheries 1"],[900,9,0,"Jaysagar Fisheries Co-op"],[468,9,0,"Ganesh Ice Factory"],[798,9,0,"Narsi Velji Lodhari"],[862.8,9,0,"Kanji Ramji Salet"],[748,9,0,"Bhikhu Velji Lodhari"],[360,9,0,"Kishore R Lodhari"],[519.2,9,0,"Bhimji Padhu Toraniya"],[584.85,9,0,"Vivek Matsyodhog Co-op"],[484,9,0,"Hiralal Babu Masani"],[225,9,0,"Paresh Narsi Jungi"],[240,9,0,"Savitaben Narsi Jungi"],[2161.54,9,0,"Chum Fresh Fish"],[930,9,0,"Jayaben P Lodhari 1"],[350,9,0,"Faruq Aftab Exports"],[286,9,0,"Narsi Babubhai Masani"],[135,9,0,"Narsi B Masani"],[400,9,0,"Rajdhani Fisheries Co-op"],[2100,9,0,"Gajraj Fish Shed"],[632,9,0,"Jitendra N Lodhari"],[300,9,0,"Vinod Premji Kotiya"],[227,9,0,"Madhavji B Motivaras"],[600,9,0,"Ruhi Frozen Foods"],[1560,9,0,"Rajesh Babulal Panjri"],[1400,9,0,"NK Jungi"],[850,9,0,"Premji Kanji Lodhari 2"],[251.2,9,0,"Dinesh Ramji Postariya"],[846,9,0,"Babulal J Khokhri"],[1710,9,0,"Alokkumar HN Tripathi"],[798,9,0,"Karsan Ramji Salet"],[480,9,0,"Velji Kanji Kotiya"],[175,9,0,"Pramilaben N Lodhari"],[600,9,0,"Velji Madhavji Salet"],[2593.5,9,0,"Saurastra Cement Ltd"],[1371.75,9,0,"Sunil Devshi Gohil"],[231.25,9,0,"Hiralal Padhu Jungi"],[1595.62,9,0,"Nagarpalika Fish Market"],[900,9,0,"Nagarpalika Mutton Market"],[3000,9,0,"Alokkumar Frozen Storage"],[500,9,0,"Marine Police PBR"],[5761.5,9,0,"Indian Navy Porbandar"],[1389.53,9,0,"Jadavbhai V Chudasama"],[1240.31,9,0,"Chhagan Gokal Lodhari"],[2988.29,9,0,"Amrut Cold Storage"],[80,9,0,"Siddik Yunush Sati"],[1500.29,9,0,"Mohan Hiralal Siyal"],[725,9,0,"Police Asmavati Ghat"],[2228.11,9,0,"Ramesh P Motivaras"],[1084.97,9,0,"Mohanlal P Motivaras"],[979.37,9,0,"Jayaben P Lodhari 2"],[600,9,0,"Pravinbhai B Masani 1"],[620.5,9,0,"Babubhai J KhoKhri"],[240,9,0,"Babubhai B KhoKhari"],[2198.18,9,0,"Harish Ramji Postaiya"],[330,9,0,"Harjivan K Kotiya"],[864.58,9,0,"Mohamedsiddiq Karatela"],[504,9,0,"Hirabhai N Khetalpal"],[1138.76,9,0,"West Coast Foods"],[600,9,0,"Harsh Sagar Mandli"],[535.6,9,0,"Kantaben D Kotiya"],[383.84,9,0,"Dhansukh K Badarsahi"],[600,9,0,"Shivangi Fisheries Co-op"],[1260,9,0,"Nitesh Arjunbhai Jungi"],[890,9,0,"Bhartiben R Gohel"],[350,9,0,"Pravinbhai B Masani 2"],[25,9,0,"RJIL Old Port 1"],[25,9,0,"RJIL Old Port 2"],[25,9,0,"RJIL Old Port 3"],[4360,9,0,"Honest Dry Fish"],[305.89,9,0,"Kamleshbhai B Gohel"],[733.54,9,0,"Nathalal Jungi"],[504,9,0,"Yunushbhai Y Afini"],[300,9,0,"Ajaybhai J Motivaras"],[1842.4,9,0,"Manishbhai J Motivaras"],[913.54,9,0,"Nidhi Sea Food"],[2685,9,0,"Taranhar Fresh Fish"],[234,9,0,"Riddhi Siddhi Sea Food"],[5933.02,9,0,"Silver Star Export"],[690,9,0,"Supdt Police Harbor"],[1110.93,9,0,"Jitendra Mepa Bharada"],[300,9,0,"Kishor Project Ltd"],[511,9,0,"Kush Trading"],[492.73,9,0,"Mitesh J Posatariya"],[960,9,0,"Monika Sea Foods"],[518.92,9,0,"Naran Babubhai Salet"],[586.72,9,0,"Khushbu Fresh Fish"],[80,9,0,"Vanitaben D Badarshahi 1"],[870.76,9,0,"Mahendra D Madhvi"],[300,9,0,"Bipin Fish"],[275.52,9,0,"Kiran J Chudasama"],[150,9,0,"Vanitaben D Badarshahi 2"],[2049.36,9,0,"Ekta Fisheries Co-op"],[960,9,0,"Rajesh Babulal Panjari"],[54.05,9,0,"Jayesh J Shiyal"],[4192,9,0,"Silver Fish Sterilizer"],[1150,9,0,"Prakashbhai R Shiyal"],[400,9,0,"Milan Matsyaudyog Sahakari"],
+[705,10,0,"Vikas Agency"],[1350,10,0,"Vijay M Rughani"],[675,10,0,"Ibrahim A Turaq"],[1350,10,0,"Vinodchandra V"],[675,10,0,"Somnath Band Saw Mill"],[578.88,10,0,"Divya Ice Cold Storage"],[562.5,10,0,"Shitlakrupa Ice Storage"],[562.5,10,0,"Anjali Ice Cold Storage"],[675,10,0,"S Pradipkumar Maganlal"],[675,10,0,"Shivam Ice Factory"],[631.5,10,0,"Kamet Ice Industries"],[633.75,10,0,"Veravali Krupa Ice"],[705,10,0,"Kailash Ice Factory"],[675.59,10,0,"Vishnulaxmi Ice Factory"],[637.5,10,0,"JK Ice Factory"],[675,10,0,"Becharlal Devji Thanki"],[709.5,10,0,"Minaxi Ice Cold Storage"],[641.25,10,0,"Himalaya Ice Cold Storage"],[470,10,0,"Sunil Ice Factory"],[1350,10,0,"Babubhai N Vadhavi"],[300.04,10,0,"Veraval Petroleums 1"],[705,10,0,"Parsottam B Kanabar"],[675,10,0,"Arvindkumar Ranchhoddas"],[649.5,10,0,"Subham Ice Product"],[705,10,0,"Shubham Product"],[657.37,10,0,"Cham Trading Org"],[705,10,0,"Lavji Parmanand Co"],[707.94,10,0,"Radheshyam Ice Storage"],[225,10,0,"Narayan Workshop"],[1800,10,0,"Dinesh Meghaji Fofandi"],[586.05,10,0,"Rahul Marine Enterprises"],[899.08,10,0,"Mugal Kaluhusen"],[637.5,10,0,"Mahamad Faruk Janmahamad"],[525,10,0,"Kalpana Marine Agency"],[525,10,0,"GB Corporation"],[900,10,0,"Mohan Damji Bhesla"],[546.38,10,0,"JaiAmbe Ice Factory"],[439.13,10,0,"Harikrupa Ice Factory"],[406.88,10,0,"Jiaijalaram Ice Factory"],[374.63,10,0,"Mehul Diesel Works"],[362.08,10,0,"Jalaram Workshop"],[385.13,10,0,"Rajmoti Ice Cold Storage"],[352.87,10,0,"Kaushal Engineering"],[320.63,10,0,"Nathalal Nagji Koria"],[290,10,0,"Gujarat Marble"],[181.13,10,0,"Rameshwari Engineering"],[133.66,10,0,"Sagardeep Marine Spares"],[61.8,10,0,"Priyank Engineering"],[35.84,10,0,"MP Vaghela"],[449.5,10,0,"Om Ice Factory"],[563.07,10,0,"Narayan Ice Factory VRL"],[500,10,0,"Trivedi Sons Weighbridge"],[600,10,0,"Gangasagar Ice 23-1"],[600,10,0,"Ashaganga Ice 23-2"],[550,10,0,"Keval Exports 24"],[588.5,10,0,"Kanaiya Ice Cold Storage"],[900,10,0,"Keval Exports 26"],[900,10,0,"Rajdhani Ice Factory VRL"],[500,10,0,"Indian Sea Foods"],[600,10,0,"Avdhesh Ice Factory"],[300,10,0,"Haripanth Ice Factory"],[1200,10,0,"Manish Sea Foods"],[548.5,10,0,"Ashwin Ice Factory"],[581,10,0,"Ridhhi Sidhdhi Ice"],[600,10,0,"Krishna Ice Factory 34"],[500,10,0,"Jentibhai R Koriya"],[375,10,0,"Parag Ice Factory"],[450,10,0,"Shrinathji Ice Storage"],[450,10,0,"Radhe Ice Cold Storage"],[464.25,10,0,"Jai Mahakal Ice Storage"],[448,10,0,"Chamunda Ice Products"],[420,10,0,"Chamunda Ice Cold Storage"],[420,10,0,"Maruti Ice Factory"],[350,10,0,"Diwaliben B Tank"],[706.38,10,0,"Bhagvati Ice Factory"],[555,10,0,"Shivshakti Ice Factory"],[247.5,10,0,"JitendraKumar L Suyani"],[421.13,10,0,"Parishram Spares Workshop"],[416.6,10,0,"Ramabhai D Barad"],[446.25,10,0,"Ratnaker Ice Cold Storage"],[448.2,10,0,"Balaji Workshop"],[374.63,10,0,"Kishan Damji Bhesla"],[601.11,10,0,"Vanita Cold Storage 52-53"],[831.7,10,0,"Vanita Cold Storage 54-55"],[831.7,10,0,"Krishna Ice Factory 58"],[831.7,10,0,"Khodiyar Ice Factory"],[90,10,0,"Kiran Electrical Engg"],[667.32,10,0,"Vanita Cold Storage 56-57"],[846.99,10,0,"Shivshakti Marine Engg"],[396.99,10,0,"Makwana Re-powering Wks"],[1500,10,0,"Monark Sea Foods"],[1770,10,0,"Hindustan Petroleums VRL"],[988,10,0,"Deepmala Marine Exports 5"],[990,10,0,"Deepmala Marine Exports 6"],[1976,10,0,"Saraswati Ice Cold Storage C"],[532,10,0,"Gangasagar Ice Factory C"],[1300,10,0,"Veraval Industries Assn"],[376,10,0,"Trikamlal Devji Gohel"],[324,10,0,"Naran Karshan Malam"],[1774.18,10,0,"Veraval Samsat Ghyanti"],[928.88,10,0,"Iswarprakash Ice FH-1"],[449.84,10,0,"GFCCA Ltd FH Partial"],[3020,10,0,"Castle Rock Sea Foods 2"],[3020,10,0,"Castle Rock Sea Foods 3"],[3236.55,10,0,"Castle Rock Cold Storage"],[2531.61,10,0,"Cent Inst Fisheries Tech"],[3442.01,10,0,"Kalpataru Exports Fofandi"],[2950,10,0,"BMG Fisheries FH"],[2229.67,10,0,"Bhavani Sea Foods FH-9"],[2229.76,10,0,"Maruti Krupa Ice Storage"],[3922,10,0,"Alana Frozen Foods FH-17"],[595,10,0,"Shakti Ice FH-22"],[1005,10,0,"Parishram Ice FH-23-24"],[310,10,0,"GFCCA Ltd Fueling"],[55.74,10,0,"Babubhai R Jungi"],[55.74,10,0,"Madhu Damji Khapandi"],[760,10,0,"Chandra Marine Machinery"],[660,10,0,"Urmi Marine Engg Wks"],[2960,10,0,"Fisheries Dept Service Stn"],[3810.94,10,0,"Bhavani Sea Foods FH-38"],[2010,10,0,"Gopal Fisheries FH-44"],[743.22,10,0,"Gopal Fisheries FH-47"],[873.47,10,0,"Bhavani Sea Foods FH-48"],[2607.56,10,0,"Hariom Ice Cold Storage"],[288,10,0,"Saraswati Ice FH-57"],[1660,10,0,"Deepmala Marine FH-58"],[180,10,0,"Virmlaben M Suyani"],[67.38,10,0,"Mansukhlal R Suyani"],[67.1,10,0,"Jamnadas Hemraj Dodia"],[70,10,0,"Somnath Marine Spares"],[80,10,0,"Pithadia Freezing 64"],[74.32,10,0,"Harilal Virji Pithadia"],[214.5,10,0,"Pithadiya Frizing 66-68"],[1160.83,10,0,"Dinesh Sea Foods FH-16"],[99.98,10,0,"Rameshchandra A Fofandi"],[2859.15,10,0,"Iswarprakash Ice FH-36"],[1002.93,10,0,"Anurag Sea Foods"],[1670.78,10,0,"Elite Ship Yard"],[1989.53,10,0,"Veraval Shipping Corp"],[625,10,0,"Jai Sagar Co-op Diesel"],[1168.21,10,0,"RJ Trivedi Sons"],[4935.94,10,0,"VRL Machchhi Kharid Vechan"],[208.82,10,0,"Vallabh Haridas Oil Cake"],[400,10,0,"GFCCA Ltd Navabander"],[450,10,0,"Jafrabad Machhi Khari Sangh"],[743.59,10,0,"Faruq Mohamed Pirani"],[49.92,10,0,"Trikamlal N Agya"],[1114,10,0,"GFCCA Ltd Ice Factory Misc"],[800,10,0,"Parishram Mastyodhyog Co-op"],[604.08,10,0,"Jalaram Ice Factory Misc"],[94.84,10,0,"Kharva Machhimar Assn"],[9840,10,0,"GFCCA Ltd Boat Building"],[185.92,10,0,"Sorathiya Traders"],[540.96,10,0,"Babu Jamal Patni"],[557.69,10,0,"Iqubal Haji Ibrahim"],[625,10,0,"Mahesh Saw Mills VRL"],[321.5,10,0,"Bharat Computer WB"],[4141,10,0,"Coast Guard Godown"],[1993.39,10,0,"Bharat Petroleum Diesel"],[23886.68,10,0,"Sorath Onion Merchant Assn"],[1000,10,0,"Marine Police Navabandar"],[2000,10,0,"Mansukh R Suyani Misc"],[200,10,0,"Chamunda Ice Misc"],[841.66,10,0,"Honest Ice Cold Storage"],[300.04,10,0,"Veraval Petroleums Hanuman"],[720,10,0,"Chandrakant Co"],[375,10,0,"Ganesh Sagar Petroleum"],
+[485910,11,1,"Petronet LNG Limited"],[135708,11,1,"APPPL Dahej Plot 1"],[115367,11,1,"APPPL Dahej Plot 2"],
+[4090000,12,1,"Hazira Port Pvt Ltd (409 Ha)"],
+[13774000,13,1,"GAPL/APSEZL Mundra (3404 Acres)"]
+];
 
 // ═══════════════════════════════════════════════════════════════════
 // UTILITIES
@@ -211,6 +151,35 @@ function fmtA(a) {
     : a.toLocaleString('en-IN', {maximumFractionDigits:0}) + ' sqm';
 }
 
+// ═══════════════════════════════════════════════════════════════════
+// BUILD INITIAL PLOTS
+// ═══════════════════════════════════════════════════════════════════
+let _id = 0;
+function buildPlots() {
+  return RAW.map(function(row) {
+    const area = row[0], portIdx = row[1], isLPA = row[2], name = row[3];
+    const port = PORT_NAMES[portIdx];
+    const pgIdx = PG_IDX[port] !== undefined ? PG_IDX[port] : 0;
+    const meta = isLPA ? LPA_META[name] : null;
+    const rec = meta && meta.rec ? true : false;
+    const landType = isLPA ? (rec ? 'reclaimed_pre2018' : 'lpa') : 'sopc';
+    const currentRent = isLPA ? (LPA_RENT[name] || 0) : (area / 10) * 1018;
+    return {
+      id: _id++, name, port, portIdx, pgIdx, landType, area,
+      currentRent,
+      leaseStart: meta ? meta.start : 2015,
+      leaseTerm:  meta ? meta.term  : (isLPA ? 30 : 5),
+      acqCr:      meta ? meta.acqCr : 0,
+      indivVal:     null,
+      acqValPsqm:   null,
+      recYear: meta && meta.recYr ? meta.recYr : null,
+      notes: '',
+    };
+  });
+}
+
+const INIT_PLOTS = buildPlots();
+
 const DEF_CTRL = {
   sopcCurRate:1018, sopcRevRate:1200,
   pgVals:[6000,4000,4000,3000],
@@ -227,7 +196,7 @@ const DEF_CTRL = {
 };
 
 // ═══════════════════════════════════════════════════════════════════
-// SHARED STYLES
+// SHARED STYLES (plain objects only — no JSX)
 // ═══════════════════════════════════════════════════════════════════
 const INP  = {border:'0.5px solid #d1d5db',borderRadius:4,padding:'3px 7px',fontSize:11,background:'#fff',color:'#111',width:80};
 const SEL  = {border:'0.5px solid #d1d5db',borderRadius:4,padding:'3px 6px',fontSize:11,background:'#fff',color:'#111'};
@@ -246,7 +215,7 @@ function badgeStyle(color, bg) {
 // ═══════════════════════════════════════════════════════════════════
 // PLOT EDITOR MODAL
 // ═══════════════════════════════════════════════════════════════════
-function PlotEditor({ plot, onSave, onDelete, onClose, isNew, saving }) {
+function PlotEditor({ plot, onSave, onDelete, onClose, isNew }) {
   const [f, setF] = useState(Object.assign({}, plot));
 
   function updStr(k) {
@@ -310,12 +279,10 @@ function PlotEditor({ plot, onSave, onDelete, onClose, isNew, saving }) {
 
         <div style={{display:'flex',gap:6,justifyContent:'flex-end',marginTop:14,paddingTop:10,borderTop:'0.5px solid #e5e7eb'}}>
           {!isNew && (
-            <button onClick={function() { if (window.confirm('Delete this plot?')) onDelete(plot.id); }} style={Object.assign({},btnStyle(false),{color:'#dc2626'})} disabled={saving}>Delete</button>
+            <button onClick={function() { if (window.confirm('Delete this plot?')) onDelete(plot.id); }} style={Object.assign({},btnStyle(false),{color:'#dc2626'})}>Delete</button>
           )}
-          <button onClick={onClose} style={btnStyle(false)} disabled={saving}>Cancel</button>
-          <button onClick={function() { onSave(Object.assign({}, f, {id: plot.id})); }} style={btnStyle(true,'#1e40af')} disabled={saving}>
-            {saving ? 'Saving…' : 'Save'}
-          </button>
+          <button onClick={onClose} style={btnStyle(false)}>Cancel</button>
+          <button onClick={function() { onSave(Object.assign({}, f, {id: plot.id})); }} style={btnStyle(true,'#1e40af')}>Save</button>
         </div>
       </div>
     </div>
@@ -421,7 +388,7 @@ function RowDetail({ row, onClose, onEdit }) {
 }
 
 // ═══════════════════════════════════════════════════════════════════
-// CONTROL PANEL
+// CONTROL PANEL SECTION
 // ═══════════════════════════════════════════════════════════════════
 function CPSection({ label, open, onToggle, children }) {
   return (
@@ -633,33 +600,17 @@ function ControlPanel({ c, setC }) {
 // MAIN APP
 // ═══════════════════════════════════════════════════════════════════
 export default function App() {
-  const [ctrl,   setCtrl]  = useState(DEF_CTRL);
-  const [plots,  setPlots] = useState([]);
-  const [loading,setLoading]= useState(true);
-  const [dbError,setDbError]= useState(null);
-  const [saving, setSaving] = useState(false);
-  const [editP,  setEditP] = useState(null);
-  const [detail, setDetail]= useState(null);
-  const [isNew,  setIsNew] = useState(false);
-  const [search, setSearch]= useState('');
-  const [filt,   setFilt]  = useState({land:'All',port:'All',status:'All',impact:'All'});
-  const [sortK,  setSortK] = useState('impact');
-  const [pg,     setPg]    = useState(0);
-  const [cpOpen, setCpOpen]= useState(true);
+  const [ctrl,  setCtrl]  = useState(DEF_CTRL);
+  const [plots, setPlots] = useState(INIT_PLOTS);
+  const [editP, setEditP] = useState(null);
+  const [detail,setDetail]= useState(null);
+  const [isNew, setIsNew] = useState(false);
+  const [search,setSearch]= useState('');
+  const [filt,  setFilt]  = useState({land:'All',port:'All',status:'All',impact:'All'});
+  const [sortK, setSortK] = useState('impact');
+  const [pg,    setPg]    = useState(0);
+  const [cpOpen,setCpOpen]= useState(true);
   const PGS = 25;
-
-  // ── LOAD FROM SUPABASE ON MOUNT ──────────────────────────────────
-  useEffect(function() {
-    sb.get('plots', 'order=id.asc')
-      .then(function(rows) {
-        setPlots(rows.map(dbToPlot));
-        setLoading(false);
-      })
-      .catch(function(err) {
-        setDbError(err.message);
-        setLoading(false);
-      });
-  }, []);
 
   // ── COMPUTE ENGINE ──────────────────────────────────────────────
   const computed = useMemo(function() {
@@ -741,75 +692,32 @@ export default function App() {
       const q = search.toLowerCase();
       arr = arr.filter(function(r) { return r.p.name.toLowerCase().includes(q) || r.p.port.toLowerCase().includes(q); });
     }
-    if (sortK === 'impact')        arr = arr.slice().sort(function(a,b) { return Math.abs(b.rents.opt6-b.existing) - Math.abs(a.rents.opt6-a.existing); });
+    if (sortK === 'impact')   arr = arr.slice().sort(function(a,b) { return Math.abs(b.rents.opt6-b.existing) - Math.abs(a.rents.opt6-a.existing); });
     else if (sortK === 'area')     arr = arr.slice().sort(function(a,b) { return b.p.area - a.p.area; });
     else if (sortK === 'existing') arr = arr.slice().sort(function(a,b) { return b.existing - a.existing; });
     else if (sortK === 'expiry')   arr = arr.slice().sort(function(a,b) { return a.p.yearsLeft - b.p.yearsLeft; });
     return arr;
   }, [computed, filt, search, sortK]);
 
-  const paged   = filtered.slice(pg * PGS, (pg + 1) * PGS);
-  const totalPg = Math.ceil(filtered.length / PGS);
+  const paged    = filtered.slice(pg * PGS, (pg + 1) * PGS);
+  const totalPg  = Math.ceil(filtered.length / PGS);
 
-  // ── CRUD — now persisted to Supabase ────────────────────────────
-  const savePlot = useCallback(async function(p) {
-    setSaving(true);
-    try {
-      if (isNew) {
-        // Generate next id (max existing + 1)
-        const nextId = plots.reduce(function(m, x) { return Math.max(m, x.id); }, 0) + 1;
-        const dbRow = Object.assign({ id: nextId }, plotToDb(p));
-        const [inserted] = await sb.insert('plots', dbRow);
-        setPlots(function(ps) { return ps.concat([dbToPlot(inserted)]); });
-      } else {
-        const [updated] = await sb.update('plots', p.id, plotToDb(p));
-        setPlots(function(ps) { return ps.map(function(x) { return x.id === p.id ? dbToPlot(updated) : x; }); });
-      }
-      setEditP(null); setIsNew(false);
-    } catch (err) {
-      alert('Save failed: ' + err.message);
-    } finally {
-      setSaving(false);
-    }
-  }, [isNew, plots]);
+  // ── CRUD ─────────────────────────────────────────────────────────
+  const savePlot = useCallback(function(p) {
+    if (isNew) setPlots(function(ps) { return ps.concat([Object.assign({},p,{id:_id++})]); });
+    else       setPlots(function(ps) { return ps.map(function(x) { return x.id === p.id ? p : x; }); });
+    setEditP(null); setIsNew(false);
+  }, [isNew]);
 
-  const delPlot = useCallback(async function(id) {
-    setSaving(true);
-    try {
-      await sb.delete('plots', id);
-      setPlots(function(ps) { return ps.filter(function(x) { return x.id !== id; }); });
-      setEditP(null); setIsNew(false);
-    } catch (err) {
-      alert('Delete failed: ' + err.message);
-    } finally {
-      setSaving(false);
-    }
+  const delPlot = useCallback(function(id) {
+    setPlots(function(ps) { return ps.filter(function(x) { return x.id !== id; }); });
+    setEditP(null); setIsNew(false);
   }, []);
 
   function openAdd() {
     setIsNew(true);
     setEditP({id:-1,name:'',port:'Veraval',portIdx:10,pgIdx:3,landType:'sopc',area:500,currentRent:5090,leaseStart:2022,leaseTerm:5,acqCr:0,indivVal:null,acqValPsqm:null,recYear:null,notes:''});
   }
-
-  // ── LOADING / ERROR STATES ───────────────────────────────────────
-  if (loading) return (
-    <div style={{display:'flex',alignItems:'center',justifyContent:'center',height:'100vh',flexDirection:'column',gap:12,background:'#f8fafc'}}>
-      <div style={{width:36,height:36,border:'3px solid #dbeafe',borderTop:'3px solid #1e40af',borderRadius:'50%',animation:'spin 0.8s linear infinite'}}/>
-      <p style={{color:'#1e40af',fontWeight:600,fontSize:13}}>Loading plots from database…</p>
-      <style>{`@keyframes spin{to{transform:rotate(360deg)}}`}</style>
-    </div>
-  );
-
-  if (dbError) return (
-    <div style={{display:'flex',alignItems:'center',justifyContent:'center',height:'100vh',flexDirection:'column',gap:12,background:'#fff5f5',padding:24}}>
-      <p style={{fontSize:24}}>⚠️</p>
-      <p style={{color:'#991b1b',fontWeight:700,fontSize:14}}>Database connection failed</p>
-      <p style={{color:'#6b7280',fontSize:12,maxWidth:480,textAlign:'center'}}>
-        Check that <strong>SUPABASE_URL</strong> and <strong>SUPABASE_ANON</strong> are set correctly at the top of the file.
-      </p>
-      <pre style={{background:'#fee2e2',padding:'8px 14px',borderRadius:6,fontSize:11,color:'#991b1b',maxWidth:600,overflowX:'auto'}}>{dbError}</pre>
-    </div>
-  );
 
   // ── RENDER ───────────────────────────────────────────────────────
   return (
@@ -819,7 +727,7 @@ export default function App() {
       <div style={{background:'#1e3a8a',padding:'8px 16px',display:'flex',alignItems:'center',justifyContent:'space-between'}}>
         <div>
           <p style={{color:'#fff',fontSize:13,fontWeight:700,margin:0}}>GMB Land Policy — Revenue Impact Dashboard</p>
-          <p style={{color:'#93c5fd',fontSize:10,margin:'2px 0 0'}}>{plots.length} plots · 4 land categories · 8 scenarios · Live IRR · ☁️ Supabase</p>
+          <p style={{color:'#93c5fd',fontSize:10,margin:'2px 0 0'}}>{plots.length} plots · 4 land categories · 8 scenarios · Live IRR</p>
         </div>
         <div style={{display:'flex',gap:6}}>
           <button onClick={function(){setCpOpen(function(o){return !o;});}} style={{fontSize:10,padding:'4px 10px',borderRadius:4,cursor:'pointer',background:'rgba(255,255,255,0.15)',color:'#fff',border:'1px solid rgba(255,255,255,0.3)',fontWeight:400}}>
@@ -1029,7 +937,6 @@ export default function App() {
           onDelete={delPlot}
           onClose={function(){setEditP(null);setIsNew(false);}}
           isNew={isNew}
-          saving={saving}
         />
       )}
       {detail && (
