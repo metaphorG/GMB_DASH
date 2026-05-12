@@ -34,17 +34,18 @@ const RAW = [
 [600.0,0,0,"M/s Peckok Chemicals Pvt.Ltd",1987,1997],
 [800.0,0,0,"Shri B M Shah & Sons Bhavnagar",1983,1993],
 [300.0,0,0,"Shri Pravin Vaja",1986,1996],
+[304.0,0,0,"Bharat Sanchar Nigam Ltd (BSNL), Alang",2008,2013],
 [441.0,0,0,"M/s Bombay weigh bridge, Bhavnagar.",2005,2010],
 [964.5,0,0,"Shri Manoharsinh Jagatsinh Chauhan.",2014,2014],
 [3375.0,0,0,"M/s Gujarat Gas Ltd",2015,2025],
 [590.0,1,0,"Shri Chimanlal. N. Patel Bhavnagar.",1975,1995],
-[416.58,1,0,"Shri Keshavlal H Patel & Co.Bhavnagar.",1975,1994],
+[416.577,1,0,"Shri Keshavlal H Patel & Co.Bhavnagar.",1975,1994],
 [744.0,1,0,"Shri Nagindas N Pate Bhavnagar.",1975,1990],
 [919.37,1,0,"M/s J J Patel Gas Agency, Bhavnagar.",1983,1993],
 [75000.0,1,0,"M/s Bhavnagar Vegitable Products Ltd, Bhavnagar.",1986,1986],
 [919.46,1,0,"M/s H P Vitthalpara. Bhavnagar.",1984,1994],
-[899.39,1,0,"M/s B K Mansatar. Bhavnagar.",1985,1995],
-[836.43,1,0,"M/s H k kamdar & Sons. Bhavnagar.",2015,2025],
+[899.395,1,0,"M/s B K Mansatar. Bhavnagar.",1985,1995],
+[836.431,1,0,"M/s H k kamdar & Sons. Bhavnagar.",2015,2025],
 [100.0,1,0,"M/s Union Fair scale",1983,2013],
 [3442.5,1,0,"M/s Mars Metal Oxides & Alloys Corporation Bhavnagar.",1994,1999],
 [928.0,1,0,"M/s Namrta Gas Agency Bhavnagar.",1994,1999],
@@ -61,15 +62,17 @@ const RAW = [
 [2500.0,1,0,"M/s Bhavna Marine Engineers.Bhvngar.",2001,2025],
 [1044.0,1,0,"Shri Nileshkumar H Patel",2002,2006],
 [750.0,1,0,"Shri Jitendra Manubhai Vyas. Bhavnagar.",2002,2007],
-[682.84,1,0,"Shri Kiritkumar Harilal Patel",1990,1995],
+[215.8,1,0,"Shri Abdul Razaq Amadbhai, Bhavnagar",1990,1995],
+[1800.0,1,0,"Shri Mayurdhvajsinh Ghohil, Bhavnagar",1990,2049],
+[682.837,1,0,"Shri Kiritkumar Harilal Patel",1990,1995],
 [400.0,1,0,"Saurashtra Petroliums Ltd",1990,1995],
 [800.0,1,0,"M/s. Param Plastic Industries, Bhavnagar",2014,2019],
-[1000.0,1,0,"The District Superintendent of Police.Bhavnagar. Coastal Marine Police Stat",2008,2008],
+[1000.0,1,0,"The District Superintendent of Police.Bhavnagar. Coastal Marine Police S",2008,2008],
 [9058.0,1,0,"M/s J.K.Steel & Alloys, Bhavnagar",1971,2001],
 [1134.0,1,0,"M/s. Sea services Pvt. Ltd. Ahmedabad",1995,1996],
 [900.0,1,0,"M/s. Heena Gases, Bhavnagar",2015,2020],
 [1000.0,1,0,"Smt.Khamaba Dilaversingh Gohil, Bhavnagar",2017,2026],
-[222.71,1,0,"Shri Vishalpara Unnit Girishkumar, Bhavnagar",2014,2019],
+[222.705,1,0,"Shri Vishalpara Unnit Girishkumar, Bhavnagar",2014,2019],
 [155.04,1,0,"Shri Vishalpara Unnit Girishkumar, Bhavnagar",2014,2019],
 [547.2,1,0,"Shri Nitinbhai Vallabhbhai Loriya, Bhavnagar",2014,2019],
 [1800.0,1,0,"Shri Kirit Jayantilal Bhatt, Bhavnagar",2013,2018],
@@ -81,7 +84,7 @@ const RAW = [
 [1250.0,1,0,"M/s. Patanjali Marine",2015,2025],
 [10000.0,1,0,"M/s. Mahek Agro Mineral Pvt. Ltd.",2015,2025],
 [1250.0,1,0,"M/s. Maya Marine & Logistics",2015,2025],
-[450.0,2,0,"M/s Jafrabad Matsyodhyog Fish Purchase-sale Seva Sahkari Mandali, Jafrabad.",1994,2004],
+[450.0,2,0,"M/s Jafrabad Matsyodhyog Fish Purchase-sale Seva Sahkari Mandali, Jafrab",1994,2004],
 [137.0,2,0,"Police-sub-Inspector. Jafrabad.",2002,2012],
 [7161.0,3,0,"Gujarat Ware housing Co. Jamnagar.",1983,2023],
 [600.0,3,0,"M/s N.K. Parmar. Jamnagar.",1991,2025],
@@ -104,17 +107,21 @@ const RAW = [
 [600.0,3,0,"M/s. Shreeji Shipping, Jamnagar",2019,2023],
 [500.0,3,0,"M/s. Shreeji Shipping, Jamnagar",2021,2025],
 [500.0,3,0,"M/s.Vasuki Tradelink Pvt. Ltd, Rajkot",2021,2025],
+[22360.0,4,0,"M/s Narmada Cement Co Ltd, Magdalla",1978,2008],
 [210.0,4,0,"M/s Gayatri weighbridge, Magdalla.",1990,2020],
 [1700.0,4,0,"M/s Ashwani Shipping Corporation.Surat. Now M/s Ashwani Shipping.Surat",1997,2012],
 [300.0,4,0,"Gujarat Fisheries Central Co, Op,Ltd, Ahmedabad",1992,2021],
 [300.0,4,0,"Gujarat Fisheries Central Co, Op,Ltd, Ahmedabad",1992,2021],
+[1114.0,5,0,"M/s Hindustan Petroleum, Mandvi",1982,2026],
 [350.0,5,0,"Shri Nurmamad H Sangani. MotaSalaya, Mandvi.",2000,2010],
 [660.0,5,0,"M/s Gujarat Fesheries. C.C.A Ltd; Ahmedabad.",2001,2011],
 [1225.0,5,0,"M/s Zarpara Matsyodhyog Seva Sahkari Mandali Ltd.",1997,2002],
 [165.0,5,0,"M/s Sara Engineering Works, Mandvi",2008,2013],
 [38.2,5,0,"The Area Managar. Bharat Sanchar Nigam ltd. Gandhidham.Kutchh. BSNL",2007,2017],
 [1000.0,5,0,"Adani Port Ltd., Ahmedabad",1994,1999],
-[4740.0,7,0,"M/s Chaugule & Co;Ltd; Dhrol Now M/s Chaugule & Co (salt) Privete Limited.",2002,2026],
+[353.6,5,0,"M/s Mandvi Salaya Matsyodhyog Seva Sahakari Mandli",2014,2025],
+[1700.0,7,0,"M/s Shivm Marine Services, Navlakhi",1996,2035],
+[4740.0,7,0,"M/s Chaugule & Co;Ltd; Dhrol Now M/s Chaugule & Co (salt) Privete Limite",2002,2026],
 [450.0,7,0,"M/s Gayatri Weigh bridge. Navlakhi",2011,2035],
 [220.0,7,0,"General Manager Bharat Sanchar Nagam Ltd. Rajkot.",2009,2014],
 [300.0,7,0,"The Destrict Superintendent of Police Rajkot Rural",2009,2009],
@@ -122,16 +129,19 @@ const RAW = [
 [400.0,8,0,"M/s Pavanputra Fish Co-Op, Society Ltd, Porbander",1999,2018],
 [300.0,8,0,"M/s Pavanputra Fish Co-Op, Society Ltd, Porbander",2002,2016],
 [750.0,8,0,"M/s Adarsh Fish Seva Co-Op; Society Ltd, Okha.",2002,2025],
+[750.0,8,0,"M/s Adarsh Fish Seva Co-Op Society, Okha",1993,2025],
+[12270.0,8,0,"Comm of Fisheries / Research Officer GKU, Okha",1961,1961],
 [660.0,8,0,"State Bank Of india Okha",1985,2024],
 [200.0,8,0,"Police Station. Okha",2006,2006],
-[900.0,8,0,"The District Superintendent of Police, Jamnagar. Coatsal Marine Police stat",2007,2007],
+[900.0,8,0,"The District Superintendent of Police, Jamnagar. Coatsal Marine Police s",2007,2007],
 [1032.0,8,0,"M/s. Indian Roadlines, Jamnagar",2015,2019],
 [256.0,9,0,"Shri Sagar Sarvodaya Co-Op society, Porbandar",1978,2017],
-[660.0,9,0,"Smt.Premilaben N. Lodhari. Porbandar Transfer Shri Rajesh. N. Lodhari Pbr.",1991,2020],
+[660.0,9,0,"Smt.Premilaben N. Lodhari. Porbandar Transfer Shri Rajesh. N. Lodhari Pb",1991,2020],
 [300.0,9,0,"M/s Associated Transport Co. Porbandar",1991,2001],
 [256.0,9,0,"M/s JaySagar Fishing Co-Op, Society, Porbandar",1991,2025],
 [434.0,9,0,"M/s RatnaSagar Ice Factory Porbandar.",1990,2015],
 [35.55,9,0,"Smt Nilamben K. kotiya. Porbandar",1992,2021],
+[2460.0,9,0,"Agro Marine / Gujarat Fisheries, Porbandar",1973,2052],
 [459.02,9,0,"Shri SagarSakti Fishing co-Op Society, Porbandar",2000,2005],
 [315.0,9,0,"Shri Hiren Enterpricies. Porbandar",2000,2014],
 [1352.81,9,0,"Shri Mustaq Haji Siddik. Palkhiwala. Porbandar",2000,2014],
@@ -140,8 +150,9 @@ const RAW = [
 [464.0,9,0,"Shri Premji Kanji Lodhari Porbandar.",1995,2024],
 [468.0,9,0,"Shri Jivan Padhu Masani Porbandar.",1995,2024],
 [346.0,9,0,"Shri Narsi Kanji Jungi. Porbandar",1995,2024],
-[1250.0,9,0,"Shri Chum Ice & Cold Storage Porbandar NOW M/s Suraj Ice & Cold Storage Por",1995,2015],
-[120.4,9,0,"M/s SHVNG LPG Infastucture Pvt,Ltd. Pbr. Now M/s SHVNG LPG Infastucture. No",1995,2020],
+[601.18,9,0,"Shri Rajmilan Transport, Porbandar",1995,2019],
+[1250.0,9,0,"Shri Chum Ice & Cold Storage Porbandar NOW M/s Suraj Ice & Cold Storage ",1995,2015],
+[120.4,9,0,"M/s SHVNG LPG Infastucture Pvt,Ltd. Pbr. Now M/s SHVNG LPG Infastucture.",1995,2020],
 [371.58,9,0,"Shri Dhansukh Velji Lodhari. Porbandar.",1996,2025],
 [320.0,9,0,"Shri Pavanputra Fisheries Co-Op Society ltd; Porbandar.",1996,2025],
 [900.0,9,0,"Shri Jaysagar Fisheries Co-Op Society Ltd; Porbandar.",1001,2025],
@@ -157,37 +168,40 @@ const RAW = [
 [240.0,9,0,"Smt. Savitaben Narsi Jungi. Porbandar.",2000,2024],
 [2161.54,9,0,"Shri Chum Fresh Fish. Porbandar.",2000,2014],
 [930.0,9,0,"Smt. Jayaben Premjibhai Lodhari. Porbandar.",2000,2010],
-[350.0,9,0,"Shri Faruq Haji Sidik Palkhivala. Porbandar. NOW M/s. Aftab Exports, Porban",2000,2014],
+[350.0,9,0,"Shri Faruq Haji Sidik Palkhivala. Porbandar. NOW M/s. Aftab Exports, Por",2000,2014],
 [286.0,9,0,"Shri Narsi Babubhai Masani. Porbandar.",2001,2025],
 [135.0,9,0,"Shri Narsi B Masani. Porbandar.",2001,2025],
 [400.0,9,0,"Shri Rajdhani Fisheries Co.Op.Ltd. Porbandar.",2001,2006],
-[2100.0,9,0,"Shri Amar Fish Pilling Shed. Porbandar Now transferred to M/s. Gajraj Fish",2001,2015],
-[632.0,9,0,"Shri Naran Mepa Lodhari. Porbandar. Transfer Shri Jitendra N. Lodhari. Porb",2001,2025],
+[2100.0,9,0,"Shri Amar Fish Pilling Shed. Porbandar Now transferred to M/s. Gajraj Fi",2001,2015],
+[632.0,9,0,"Shri Naran Mepa Lodhari. Porbandar. Transfer Shri Jitendra N. Lodhari. P",2001,2025],
 [300.0,9,0,"Shri Vinod Premji Kotiya. Porbandar.",2001,2011],
 [227.0,9,0,"Shri Madhavji Bhimji Motivaras. Porbandar.",2001,2025],
 [600.0,9,0,"Shri Ruhi Frozen Foods. Porbandar.",2001,2025],
+[1560.0,9,0,"Shri Rajesh Babulal Panjri, Porbandar",2001,2025],
 [1400.0,9,0,"Shri N K Jungi. Porbandar.",2002,2021],
 [850.0,9,0,"Shri Dhansukh Velji Lodhari. Porbandar. Now Shri Premji Kanji Lodhari",2001,2025],
 [251.2,9,0,"Shri Dinesh Ramji Postariya. Porbandar.",2002,2021],
 [846.0,9,0,"Shri Babulal Jadavji Khokhri",2002,2026],
-[1710.0,9,0,"Shri Kantilal Velji Jungi. Porbandar. Shri Alokkumar Harnarayan Tripathi.",2002,2022],
+[1710.0,9,0,"Shri Kantilal Velji Jungi. Porbandar. Shri Alokkumar Harnarayan Tripathi",2002,2022],
 [798.0,9,0,"Shri karsan Ramji Salet. Porbandar.",2002,2026],
 [480.0,9,0,"Shri Velji Kanji Kotiya. Porbandar.",2002,2011],
-[175.0,9,0,"Shri Rajesh Naran Lodhari Porbandar NOW Smt. Pramilaben Naranbhai Lodhari",2002,2026],
+[175.0,9,0,"Shri Rajesh Naran Lodhari Porbandar NOW Smt. Pramilaben Naranbhai Lodhar",2002,2026],
 [600.0,9,0,"Shri Velji Madhavji Salet. Porbandar.",2002,2026],
 [2593.5,9,0,"Shri Saurastra Cement Ltd. Ranavav. Porbandar.",2002,2007],
 [1371.75,9,0,"Shri Sunil Devshi Gohil",2003,2027],
 [231.25,9,0,"Shri Hiralal Padhu Jungi",1995,2000],
+[1595.62,9,0,"Porbandar Nagarpalika Fish Market",2002,2002],
 [900.0,9,0,"Porbandar Nagarpalika",2015,2025],
-[3000.0,9,0,"Smt. Sobhnaben Kantilal Jungi. Porbandar Name Transfer to Alokkumar Harnara",2008,2022],
-[500.0,9,0,"The District Superintendent of Police.Porbandar. Out Post Marine Police Sta",2015,2008],
+[3000.0,9,0,"Smt. Sobhnaben Kantilal Jungi. Porbandar Name Transfer to Alokkumar Harn",2008,2022],
+[500.0,9,0,"The District Superintendent of Police.Porbandar. Out Post Marine Police ",2015,2008],
 [5761.5,9,0,"Indian Nevy, Porbandar.",2015,2025],
 [1389.53,9,0,"M/s Jadavbhai Varjangbhai Chudasama, Porbandar",2011,2025],
 [1240.31,9,0,"Shri Chhagan Gokal Lodhari, Porbandar",2011,2016],
 [2988.29,9,0,"M/s. Amrut Cold Storage Pvt.Ltd.",2015,2019],
-[80.0,9,0,"Shri Siddik Jamal Sati. Porbandar Now Shri Siddik Jamal Sati, and Yunush Ja",2015,2024],
+[80.0,9,0,"Shri Siddik Jamal Sati. Porbandar Now Shri Siddik Jamal Sati, and Yunush",2015,2024],
 [1500.29,9,0,"Shri Mohan Hiralal Siyal, Porbandar",2016,2020],
 [725.0,9,0,"The District Superintendent of Police.Porbandar.",2014,2014],
+[2228.11,9,0,"Shri Ramesh P Motivaras, Porbandar",2012,2026],
 [1084.97,9,0,"Shri Mohanlal Premjibhai Motivaras, Porbandar",2012,2026],
 [979.37,9,0,"Smt. Jayaben Premjibhai Lodhari. Porbandar.",1997,2026],
 [600.0,9,0,"shri Pravinbhai Babubhai Masani, Porbandar",2015,2019],
@@ -201,6 +215,7 @@ const RAW = [
 [600.0,9,0,"Shri Harsh Sagar Matsyodhyog Seva Sahakari Mandli Ltd., Porbandar",2013,2027],
 [535.6,9,0,"Smt.Kantaben Devjibhai Kotiya, Porbandar",2013,2027],
 [383.84,9,0,"Shri Dhansukh Khimabhai Badarsahi, Porbandar",2015,2019],
+[600.0,9,0,"M/s Shivangi Fisheries Co-Op Society, Porbandar",2015,2019],
 [1260.0,9,0,"Shri Nitesh Arjunbhai Jungi, Porbandar",2015,2019],
 [890.0,9,0,"Smt. Bhartiben Rameshbhai Gohel, Porbandar",2015,2019],
 [350.0,9,0,"shri Pravinbhai Babubhai Masani, Porbandar",2022,2022],
@@ -236,17 +251,19 @@ const RAW = [
 [4192.0,9,0,"M/s.Silver Fish Sterilizer",2022,2026],
 [1150.0,9,0,"Shree Prakashbhai Ramajibhai Shiyal",2015,2025],
 [400.0,9,0,"M/s Milan Matsyaudyog Sahakari Ltd.",2015,2025],
+[705.0,10,0,"M/S Vikas Agency, Veraval",1974,2028],
 [1350.0,10,0,"Shri Vijay.M.Rughani. Veraval",1976,2001],
 [675.0,10,0,"Shri Ibrahim Allarakha Turaq, Veraval",1988,2022],
 [1350.0,10,0,"Shri Vinodchandra Vallabhchandra.Veraval",1978,1998],
 [675.0,10,0,"Shri Somnath Band Saw Mill. Veraval",1978,2003],
-[578.88,10,0,"Shri Divya Ice & Cold Storage. Veraval (Change the name from Minaxi ice pro",1995,2000],
+[578.875,10,0,"Shri Divya Ice & Cold Storage. Veraval (Change the name from Minaxi ice ",1995,2000],
 [562.5,10,0,"Shri Shitlakrupa Ice & Cold Storage.Veraval.",1995,2000],
 [562.5,10,0,"Shri Anjali Ice & Cold Storage. Veraval.",1995,2005],
 [675.0,10,0,"Shri S.Pradipkumar. Maganlal. Veraval",1987,2031],
 [675.0,10,0,"Shri Shivam Ice Factory. Veraval",1987,2031],
 [631.5,10,0,"Shri Kamet Ice Industries. Veraval",1994,2018],
 [633.75,10,0,"Shri Veravali Krupa Ice Factory. Veraval",1991,1996],
+[705.0,10,0,"Shri Kailash Ice Factory, Veraval",1990,1995],
 [675.59,10,0,"Shri Vishnulaxmi Ice Factory & Cold Storege.Veraval",1992,2025],
 [637.5,10,0,"Shri J.K.Ice Factory.Veraval",1991,1996],
 [675.0,10,0,"Shri Becharlal Devji Thanki. Veraval",1994,1999],
@@ -261,33 +278,43 @@ const RAW = [
 [705.0,10,0,"Shri Shubham Product.Veraval",1990,2000],
 [657.37,10,0,"Shri Cham Treding Orgenizaion. Veraval",1992,1997],
 [705.0,10,0,"Shri Lavji Parmanand & co. Veraval",2015,2025],
+[707.94,10,0,"Shri Radheshyam Ice & Cold Storage, Veraval",1992,2025],
 [225.0,10,0,"Shri Narayan Work Shop. Veraval",1996,2001],
 [1800.0,10,0,"Shri Mashru & Co.Veraval. NOW Shree Dinesh Meghaji Fofandi",1972,2021],
 [586.05,10,0,"Shri Rahul Marine Enterprises. Veraval",1995,2025],
 [899.08,10,0,"Shri Mugal Kaluhusen.Veraval",1996,2001],
 [637.5,10,0,"Shri Mahamad Faruk Janmahamad Veraval",1992,2011],
-[525.0,10,0,"Shri Padam Auto Service Station. Veraval NOW transfer to: M/s.Kalpana Marin",1996,2025],
+[525.0,10,0,"Shri Padam Auto Service Station. Veraval NOW transfer to: M/s.Kalpana Ma",1996,2025],
 [525.0,10,0,"Shri G.B. Corporation,Veraval",1995,2024],
-[900.0,10,0,"Shri Padmanikrupa Ice Factory, Veraval Now Shri Mohan Damji Bhesla Veraval",1987,2026],
-[439.12,10,0,"Shri Harikrupa Ice Factory,Veraval",2020,2025],
-[406.88,10,0,"Shri Jagdishchandra M Kuhada now Shri Jiaijalaram Ice Factory,Veraval",2011,2036],
+[900.0,10,0,"Shri Padmanikrupa Ice Factory, Veraval Now Shri Mohan Damji Bhesla Verav",1987,2026],
+[546.375,10,0,"Shri JaiAmbe Ice Factory, Veraval",1991,1996],
+[439.125,10,0,"Shri Harikrupa Ice Factory,Veraval",2020,2025],
+[406.875,10,0,"Shri Jagdishchandra M Kuhada now Shri Jiaijalaram Ice Factory,Veraval",2011,2036],
+[374.625,10,0,"Shri Mehul Diesel Works, Veraval",1995,2014],
 [362.08,10,0,"M/s Premji Meghji Ravat Now Shri Jalaram Workshop, Veraval",1994,2033],
-[385.12,10,0,"Shri Ratanshi V Malam Sagar Ice Factory Now Shri Rajmoti Ice & Cold Storage",2000,2024],
+[385.125,10,0,"Shri Ratanshi V Malam Sagar Ice Factory Now Shri Rajmoti Ice & Cold Stor",2000,2024],
+[352.87,10,0,"Shri Kaushal Engineering Works, Veraval",1990,2024],
+[320.625,10,0,"Shri Nathalal Nagji Koria, Veraval",1990,1995],
 [290.0,10,0,"Shri Gujarat Marble, Veraval",1990,1995],
-[181.12,10,0,"Shri Jaishakti Welding Works, Veraval NOW M/s. Rameshwari Engineering Works",1990,2024],
-[133.66,10,0,"Shri Sagardeep Spares,Veraval M/s Sagardeep Ice & cold storage, Veraval now",1995,2024],
+[181.125,10,0,"Shri Jaishakti Welding Works, Veraval NOW M/s. Rameshwari Engineering Wo",1990,2024],
+[133.66,10,0,"Shri Sagardeep Spares,Veraval M/s Sagardeep Ice & cold storage, Veraval ",1995,2024],
 [61.8,10,0,"Shri Priyank Engineering & Chemical Works, Veraval",1994,2004],
-[35.84,10,0,"Shri M.P.Vaghela,Veraval",2015,2001],
+[35.837,10,0,"Shri M.P.Vaghela,Veraval",2015,2001],
 [449.5,10,0,"Shri Om Ice factory,Veraval",1994,1999],
+[563.065,10,0,"Shri Narayan Ice Factory, Veraval",1990,2024],
 [500.0,10,0,"Shri Trivedi & Sons,Veraval",1991,1996],
+[600.0,10,0,"Shri Gangasagar Ice Factory, Veraval",1995,2024],
+[600.0,10,0,"Shri Ashaganga Ice Factory, Veraval",1995,2024],
 [550.0,10,0,"M/s Keval Exports. Patel Niharikaben Kamleshkumar. Veraval",2007,2031],
 [588.5,10,0,"Shri Kanaiya Ice & Cold Storege, Veraval",1996,2001],
 [900.0,10,0,"M/s Keval Exports. Patel Niharikaben Kamleshkumar. Veraval",2007,2031],
-[900.0,10,0,"Shri Rajdhani Ice factory,Veraval (Lease transfer from the name of Mr.Babub",1995,2024],
-[500.0,10,0,"Shri Karsan H Agiya Now Smt.Paniben Karsan Agiya, Veraval NOW M/s.Indian Se",1994,2033],
-[300.0,10,0,"Swastik Ice & Cold storage Now Shri Babubhai Hamirbhai Thapaliya, Veraval N",1994,2026],
+[900.0,10,0,"Shri Rajdhani Ice factory,Veraval (Lease transfer from the name of Mr.Ba",1995,2024],
+[500.0,10,0,"Shri Karsan H Agiya Now Smt.Paniben Karsan Agiya, Veraval NOW M/s.Indian",1994,2033],
+[600.0,10,0,"M/s Avdhesh Ice Factory, Veraval",1994,2018],
+[300.0,10,0,"Swastik Ice & Cold storage Now Shri Babubhai Hamirbhai Thapaliya, Verava",1994,2026],
+[1200.0,10,0,"Shri Manish Sea Foods, Veraval",1995,2000],
 [548.5,10,0,"Shri Manubhai Jivabhai Gadhiya, Veraval Now Ashwin Ice Factory",1992,2024],
-[581.0,10,0,"Kisan Jadav kuhada Now M/s Ridhhi Sidhdhi Ice Facory. Veraval (Lease transf",1994,2033],
+[581.0,10,0,"Kisan Jadav kuhada Now M/s Ridhhi Sidhdhi Ice Facory. Veraval (Lease tra",1994,2033],
 [600.0,10,0,"Shri Krishna Ice Factory,Veraval",1990,2000],
 [500.0,10,0,"Shri Ramji Mandan Koriya. Veraval NOW Shri Jentibhai Ramjibhai Koriya",1992,2026],
 [375.0,10,0,"Shri Parag Ice Factory, Veraval",1991,2025],
@@ -298,20 +325,21 @@ const RAW = [
 [420.0,10,0,"Shri Chamunda ice & Cold Storage, Veraval",2015,2025],
 [420.0,10,0,"Shri Maruti Ice Factory,Veraval",1990,2024],
 [350.0,10,0,"Shri Bachubhai Nathabhai Tank. Veraval Now Smt.Diwaliben Bachubhai Tank",1991,2025],
-[706.38,10,0,"Shri Bhagvati Ice factory,Veraval",1992,1997],
+[706.375,10,0,"Shri Bhagvati Ice factory,Veraval",1992,1997],
 [555.0,10,0,"Shri Shivshakti Ice factory,Veraval",1994,1999],
 [247.5,10,0,"Shri Lakham R.Suyani Now Shri JitendraKumar Lakham Suyani. Veraval",1995,2005],
-[421.12,10,0,"Parishram Ice plant & cold storage Now Shri Parishram Spares Workshop & Ser",2015,2025],
-[416.6,10,0,"Shri Ramabhai Dhanabhai Barad. Veraval",1992,2051],
+[421.125,10,0,"Parishram Ice plant & cold storage Now Shri Parishram Spares Workshop & ",2015,2025],
+[416.595,10,0,"Shri Ramabhai Dhanabhai Barad. Veraval",1992,2051],
 [446.25,10,0,"KhaKhar weighbridge Now Shri Ratnaker Ice & Cold storage. Veraval",1994,1999],
 [448.2,10,0,"shri Balaji Workshop,Vearaval",1994,1999],
-[374.62,10,0,"Shri kishan Damji Bhesla, Veraval",1994,2019],
+[374.625,10,0,"Shri kishan Damji Bhesla, Veraval",1994,2019],
 [601.11,10,0,"Shri Ease Industries, VRL.. NOW Shri Vanita Cold storage, Veraval",1994,2028],
 [831.7,10,0,"Shri Vanita Cold storage, Veraval",1995,2029],
 [831.7,10,0,"Shri Krishna Ice factory,Veraval",1995,2024],
 [831.7,10,0,"Shri khodiyar Ice Factory, Veraval",1995,2000],
 [90.0,10,0,"Shri Kiran Electrical Engineering, Veraval",2012,2026],
 [667.32,10,0,"Vanita Cold Storage, Veraval",2014,2033],
+[846.99,10,0,"Shri Shivshakti Marine Engineering Works, Veraval",1987,2026],
 [396.99,10,0,"Shri Makwana Re-powering Works. Veraval",1987,2016],
 [1500.0,10,0,"Shri Monark Sea Foods Pvt,Ltd,Veraval",1974,2004],
 [1770.0,10,0,"Shri Hindustan Petroliums,Veraval",1974,2004],
@@ -319,29 +347,37 @@ const RAW = [
 [990.0,10,0,"Shri Deepmala Marine Exports. Veraval",1995,2020],
 [1976.0,10,0,"Shri Saraswati Ice & Cold Storage. Veraval",1994,1999],
 [532.0,10,0,"Shri Gangasagar Ice Factory,Veraval",1991,2025],
+[1300.0,10,0,"Veraval Industries Association",1999,2004],
 [376.0,10,0,"Shri Trikamlal Devji Gohel. Veraval",1974,1994],
 [324.0,10,0,"Shri Naran Karshan Malam, Veraval",1975,2000],
 [1774.18,10,0,"Shri Veraval Samsat Ghyanti, Veraval",2009,2013],
+[928.88,10,0,"Shri Iswarprakash Ice Factory FH-1, Veraval",1994,2028],
+[449.84,10,0,"M/s GFCCA Ltd Fish Harbour Partial, Veraval",1971,2026],
 [3020.0,10,0,"Shri Castle rock Sea Foods Pvt,Ltd,Veraval",1973,2009],
 [3020.0,10,0,"Shri Castle rock Sea Foods Ltd,Veraval",1974,2013],
 [3236.55,10,0,"Shri Castle rock cold storage pvt. ltd, Veraval",1989,2014],
-[2531.61,10,0,"Shri Central Institute Of Fisheries Technology, Veraval",1971,2031],
-[2229.67,10,0,"Shri Arjundev H Bhesla Now Shri Bhavani Sea Foods. Veraval",2015,2025],
-[2229.76,10,0,"Shri Maruti Krupa Ice & Cold Storage. Veraval",2014,2024],
-[3922.0,10,0,"M/s G L Sheth M/s BMG Fisheries pvt. Ltd. M/s International Creative food L",2015,2025],
+[2531.606,10,0,"Shri Central Institute Of Fisheries Technology, Veraval",1971,2031],
+[3442.01,10,0,"M/s Kalpataru Exports, Veraval",2009,2023],
+[2950.0,10,0,"M/s BMG Fisheries Pvt Ltd, Veraval",1973,1998],
+[2229.672,10,0,"Shri Arjundev H Bhesla Now Shri Bhavani Sea Foods. Veraval",2015,2025],
+[2229.762,10,0,"Shri Maruti Krupa Ice & Cold Storage. Veraval",2014,2024],
+[3922.0,10,0,"M/s G L Sheth M/s BMG Fisheries pvt. Ltd. M/s International Creative foo",2015,2025],
 [595.0,10,0,"Shri Shakti Ice & Cold Storage, Veraval",1986,2000],
 [1005.0,10,0,"Shri Parishram Ice & Cold Storege, Veraval",1986,2000],
-[55.74,10,0,"Shri Babubhai Ramjibhai Jungi. Veraval",2015,2025],
-[55.74,10,0,"Shri Madhu Damji Khapandi, Veraval",1995,2000],
+[310.0,10,0,"M/s GFCCA Ltd Fueling, Veraval",1971,2035],
+[55.742,10,0,"Shri Babubhai Ramjibhai Jungi. Veraval",2015,2025],
+[55.742,10,0,"Shri Madhu Damji Khapandi, Veraval",1995,2000],
 [760.0,10,0,"Shri Grives Cotton & Co. Veraval NOW M/s. Chandra Marine Machinery Store",1971,2014],
 [660.0,10,0,"Shi Urmi Marine Engineering Works,Veraval",1986,2030],
-[3810.94,10,0,"Shri Veraval Marine & Chemical Pvt,Ltd,Veraval Now … M/s. Bhavani Sea Foods",1978,2023],
-[2010.0,10,0,"Shri Konkan Fisheries Pvt,Ltd. Veraval …. NOW M/s. Gopal Fisheries, Veraval",1971,2011],
-[743.22,10,0,"Shri Konkan Fisheries Pvt,Ltd. Veraval… ….. NOW M/s. Gopal Fisheries, Verav",2015,2025],
-[873.47,10,0,"M/s Veraval Marine & Chemicals Pvt,Ltd. Veraval NOW M/s. Bhavani Sea Foods",1995,2025],
+[2960.0,10,0,"Fisheries Dept Service Station, Veraval",1993,2008],
+[3810.94,10,0,"Shri Veraval Marine & Chemical Pvt,Ltd,Veraval Now … M/s. Bhavani Sea Fo",1978,2023],
+[2010.0,10,0,"Shri Konkan Fisheries Pvt,Ltd. Veraval …. NOW M/s. Gopal Fisheries, Vera",1971,2011],
+[743.22,10,0,"Shri Konkan Fisheries Pvt,Ltd. Veraval… ….. NOW M/s. Gopal Fisheries, Ve",2015,2025],
+[873.47,10,0,"M/s Veraval Marine & Chemicals Pvt,Ltd. Veraval NOW M/s. Bhavani Sea Foo",1995,2025],
 [2607.56,10,0,"Shri Hariom Ice & Cold Storage, Veraval",1986,2001],
 [288.0,10,0,"Shri Saraswati Ice & Cold Storage, Veraval",2015,2025],
-[180.0,10,0,"Shri Matsya Vikas Kendra. Veraval NOW Smt. Virmlaben Mansukhlal Suyani. Vea",2014,2014],
+[1660.0,10,0,"M/s Deepmala Marine FH-58, Veraval",2011,2025],
+[180.0,10,0,"Shri Matsya Vikas Kendra. Veraval NOW Smt. Virmlaben Mansukhlal Suyani. ",2014,2014],
 [67.38,10,0,"Shri Mansukhlal Ramji Suyani. Veraval",1982,2026],
 [67.1,10,0,"Shri Jamnadas Hemraj Dodia. Veraval",1981,2025],
 [70.0,10,0,"Shri Somnath Marine spares & Storage Depot, Vearaval",2015,2025],
@@ -356,19 +392,26 @@ const RAW = [
 [1989.53,10,0,"M/s Veraval Shipping corporation. Veraval.",1996,2001],
 [625.0,10,0,"Shri Jai Sagar Matsyodhog Co.Op. Society Ltd, Veraval",1993,2022],
 [1168.21,10,0,"Shri R.J. Trivedi. Veraval NOW, M/s. Trivedi Sons",1971,2015],
+[4935.94,10,0,"M/s VRL / Veraval Machchhi Kharid Vechan Suppliers",1952,2012],
 [208.82,10,0,"Shri Vallabh Haridas & Co. Veraval.",2000,2014],
 [400.0,10,0,"M/s G.F.C.C.A.Ltd, Veraval",2000,2010],
 [450.0,10,0,"Shri Jafrabad Machhi Khari-Vechan Sangh, Jafrabad",2000,2005],
 [743.59,10,0,"M/s faruq Mohamad Pirani & Co, Veraval",1991,2001],
 [49.92,10,0,"Shri Trikamlal. N. Agya. Veraval",2015,2025],
+[1114.0,10,0,"M/s GFCCA Ltd Ice Factory, Veraval",2015,2025],
 [800.0,10,0,"M/s Parishram Mastyodhyog Co.Op.Mandali,Ltd, Veraval",1995,2024],
 [604.08,10,0,"Shri Jalaram Ice Factory, Veraval",1995,2019],
+[94.84,10,0,"Shri Kharva Machhimar Boat Association, Veraval",1996,2015],
+[9840.0,10,0,"M/s GFCCA Ltd Boat Building Yard, Veraval",1972,2026],
 [185.92,10,0,"Shri Kasambhai A. Veraval. Now M/s.Sorathiya Traders",1991,2020],
-[540.96,10,0,"Shri Babu. Jamal. Patni. Veraval",1991,1996],
-[557.69,10,0,"M/s Iqubal Haji Ibrahim Aybani. Veraval.",1991,2001],
+[540.958,10,0,"Shri Babu. Jamal. Patni. Veraval",1991,1996],
+[557.689,10,0,"M/s Iqubal Haji Ibrahim Aybani. Veraval.",1991,2001],
 [625.0,10,0,"M/s Mahesh Saw Mills Veraval",1994,1997],
-[321.5,10,0,"M/s Bipinchandra Amratlal Pandat. Veraval. Now Bharat Computer weigh bridge",1990,2019],
-[1000.0,10,0,"The District Superintendent of Police, Junagadh. Marine Police station at N",2015,2007],
+[321.5,10,0,"M/s Bipinchandra Amratlal Pandat. Veraval. Now Bharat Computer weigh bri",1990,2019],
+[4141.0,10,0,"Coast Guard Godown, Veraval",2015,2025],
+[1993.39,10,0,"M/s Bharat Petroleum Corporation, Veraval",2015,2025],
+[23886.68,10,0,"M/s Sorath Onion Merchant Association, Veraval",2015,2025],
+[1000.0,10,0,"The District Superintendent of Police, Junagadh. Marine Police station a",2015,2007],
 [2000.0,10,0,"Shri Mansukh Ramji Suyani Naliya Godi Area, at Veraval",2015,2024],
 [200.0,10,0,"Shri Chamunda Ice & Cold Storage, Veraval",2013,2017],
 [841.66,10,0,"Shri Honest Ice & Cold Storage, Veraval",2014,2018],
@@ -381,11 +424,12 @@ const RAW = [
 [115367,11,1,"Adani Petronet Dahej Port Pvt Ltd (Plot 2)",2009,2039,2.31,7803772],
 [4090000,12,2,"M/s Hazira Port Pvt Ltd (409 Ha - Reclaimed)",2007,2037,0.00,1],
 [13777009,13,1,"Gujarat Adani Port Ltd / APSEZL Mundra",2000,2030,7.00,2380182],
-[471120,2,1,"Swan LNG Pvt Ltd",2017,2047,7.10,56223445],
+[471120,2,1,"Swan LNG Pvt Ltd (47.112 Ha)",2017,2047,7.10,56223445],
 [47432,1,1,"Bhavnagar Port Infrastructure Pvt Ltd",2024,2054,14.20,14798800],
+[84800,2,1,"Swan LNG Pvt Ltd - Additional Plot (Proposed)",2025,2055,0.00,0],
+[164610,1,1,"Bhavnagar Port Infra Pvt Ltd - Additional (Proposed)",2025,2055,0.00,0],
 [288501,4,1,"Nauyaan Shipyard Private Ltd",2025,2055,14.40,14183164],
-[11460,4,1,"Modest Infrastructure Private Ltd",2007,2037,0.46,343800],
-[109265,4,1,"Alcock Ashdown (Gujarat) Ltd",2007,2037,0.00,1092650]
+[11460,4,1,"Modest Infrastructure Private Ltd",2007,2037,0.46,343800]
 ];
 
 // ═══════════════════════════════════════════════════════════════════
@@ -455,9 +499,10 @@ function buildCFs(inv, yr1, g, horizon, residual, expiry, curRent) {
   if (inv <= 0) return null;
   const cfs = [-inv];
   const yToExp = Math.max(0, expiry - CY);
-  let cR = curRent;
+  // Current lease rent is CONTRACTUALLY FIXED — do not escalate it.
+  // Only the post-expiry new rent grows at the policy escalation rate.
   for (let y = 1; y <= horizon; y++) {
-    if (y <= yToExp) { cfs.push(cR); cR *= (1 + g); }
+    if (y <= yToExp) { cfs.push(curRent); }
     else { cfs.push(yr1 * Math.pow(1 + g, y - yToExp - 1)); }
   }
   cfs[cfs.length - 1] += residual;
@@ -684,7 +729,7 @@ function ControlPanel({ c, setC }) {
         <div style={{background:'#f1f5f9',borderRadius:5,padding:'6px 7px',marginBottom:7}}>
           <p style={{fontSize:9,fontWeight:700,color:'#374151',margin:'0 0 5px'}}>Boundaries (sqm)</p>
           <div style={{display:'grid',gridTemplateColumns:'auto 1fr',rowGap:3,columnGap:6,alignItems:'center'}}>
-            {[['I→II',0],['II→III',1],['III→IV',2]].map(function(pair){
+            {[['Slab I → Slab II',0],['Slab II → Slab III',1],['Slab III → Slab IV',2]].map(function(pair){
               return (
                 <Fragment key={pair[0]}>
                   <span style={{fontSize:9,color:'#6b7280',fontFamily:'monospace',whiteSpace:'nowrap'}}>{pair[0]}</span>
@@ -709,7 +754,7 @@ function ControlPanel({ c, setC }) {
             <div key={l} style={{marginBottom:4,padding:'5px 7px',background:'#f8fafc',borderRadius:5,border:'1px solid #e5e7eb'}}>
               {/* Badge + range header */}
               <div style={{display:'flex',alignItems:'center',gap:5,marginBottom:4}}>
-                <span style={badge(colors[i],bgs[i])}>S{l}</span>
+                <span style={badge(colors[i],bgs[i])}>Slab {l}</span>
                 <span style={{fontSize:9,color:'#6b7280',fontFamily:'monospace'}}>{lo} – {hi} sqm</span>
               </div>
               {/* Vertically stacked sliders — always fits panel width */}
@@ -893,13 +938,32 @@ function PlotEditor({ plot, onSave, onDelete, onClose, isNew }) {
 // ═══════════════════════════════════════════════════════════════════
 // ROW DETAIL MODAL
 // ═══════════════════════════════════════════════════════════════════
-function RowDetail({ row, onClose, onEdit }) {
+function RowDetail({ row, onClose, onEdit, ctrl }) {
   const p=row.p, ex=row.existing, rents=row.rents, irrs=row.irrs;
   const tm=TYPE_META[p.landType]||TYPE_META.sopc;
   const sm=STATUS_META[p.status]||STATUS_META.active;
+  const [showProj, setShowProj] = useState(false);
+
+  const g = ctrl ? getAnnGrowth(ctrl) : 0.063;
+  const expiry = (p.leaseStart||CY)+(p.leaseTerm||30);
+  const projYears = 30;
+
+  // Build year-by-year projection for each scenario
+  function buildYearProj(k) {
+    const yr1 = rents[k];
+    const yToExp = Math.max(0, expiry - CY);
+    return Array.from({length: projYears}, function(_,i){
+      const y = i + 1;
+      if (y <= yToExp) return ex; // during current lease — fixed existing rent
+      return yr1 * Math.pow(1 + g, y - yToExp - 1);
+    });
+  }
+  const projByScen = {};
+  SCEN_KEYS.forEach(function(k){ projByScen[k] = buildYearProj(k); });
+
   return (
     <div onClick={function(e){if(e.target===e.currentTarget)onClose();}} style={{position:'fixed',inset:0,background:'rgba(0,0,0,0.5)',zIndex:999,display:'flex',alignItems:'flex-start',justifyContent:'flex-end'}}>
-      <div style={{background:'#fff',width:520,height:'100%',overflowY:'auto',padding:'1.25rem',boxShadow:'-10px 0 40px rgba(0,0,0,0.15)'}}>
+      <div style={{background:'#fff',width:580,height:'100%',overflowY:'auto',padding:'1.25rem',boxShadow:'-10px 0 40px rgba(0,0,0,0.15)'}}>
         <div style={{display:'flex',justifyContent:'space-between',alignItems:'flex-start',marginBottom:12}}>
           <div>
             <p style={{fontWeight:700,fontSize:13,margin:0,color:'#111'}}>{p.name}</p>
@@ -911,15 +975,20 @@ function RowDetail({ row, onClose, onEdit }) {
           </div>
         </div>
         <div style={{display:'grid',gridTemplateColumns:'1fr 1fr 1fr',gap:6,marginBottom:12}}>
-          {[['Lease Start',p.leaseStart],['Expiry',p.expiry],['Years Left',p.yearsLeft>0?p.yearsLeft:'Expired'],
+          {[['Lease Start',p.leaseStart],['Expiry',expiry],['Years Left',expiry-CY>0?expiry-CY:'Expired'],
             ['Acq. Cost',p.acqCr?'₹'+p.acqCr+' Cr':'—'],['Jantri Val',row.pv?'₹'+row.pv.toLocaleString('en-IN')+'/sqm':'—'],['Existing Rent',fmtCr(ex)]
           ].map(function(item){
             return <div key={item[0]} style={{background:'#f9fafb',borderRadius:6,padding:'6px 8px'}}><p style={{fontSize:9,color:'#9ca3af',margin:0}}>{item[0]}</p><p style={{fontSize:11,fontWeight:600,margin:'2px 0 0',color:'#111'}}>{item[1]}</p></div>;
           })}
         </div>
+
+        {/* IRR note box */}
+        <div style={{background:'#fffbeb',border:'1px solid #fbbf24',borderRadius:6,padding:'7px 10px',marginBottom:10,fontSize:9,color:'#92400e',lineHeight:1.6}}>
+          <strong>IRR Methodology:</strong> Investment = acquisition cost (Actual) or Jantri × area (Revalued). Cash flows: fixed existing rent during remaining lease, then proposed rent escalated at {(g*100).toFixed(2)}% p.a. post-expiry, plus residual at horizon end. Current lease rent is NOT escalated — it is contractually fixed. IRR is a <em>prospective</em> return metric from {CY}, not a historical return on original investment.
+        </div>
+
         <p style={{fontSize:11,fontWeight:700,color:'#374151',marginBottom:4}}>Full Impact — All 8 Scenarios</p>
-        <p style={{fontSize:9,color:'#9ca3af',marginBottom:8}}>IRR(Actual) = return on GMB's real acquisition spend &nbsp;|&nbsp; IRR(Revalued) = return on today's Jantri value</p>
-        <div style={{overflowX:'auto'}}>
+        <div style={{overflowX:'auto',marginBottom:12}}>
           <table style={{width:'100%',borderCollapse:'collapse',fontSize:10}}>
             <thead><tr>{['Scenario','Proposed ₹','Change ₹','% Chg','Times','IRR(Actual)','IRR(Reval)'].map(function(h){return <th key={h} style={Object.assign({},TH,{textAlign:h==='Scenario'?'left':'right'})}>{h}</th>;})}</tr></thead>
             <tbody>
@@ -940,6 +1009,68 @@ function RowDetail({ row, onClose, onEdit }) {
             </tbody>
           </table>
         </div>
+
+        {/* 30-Year Projection toggle */}
+        <div style={{marginBottom:10}}>
+          <button onClick={function(){setShowProj(function(v){return !v;});}}
+            style={Object.assign({},btnS(showProj,'#1e40af'),{fontSize:11,padding:'5px 12px'})}>
+            {showProj ? '▲ Hide' : '▼ Show'} 30-Year Revenue Projection (Year-by-Year)
+          </button>
+        </div>
+
+        {showProj && (
+          <div>
+            <p style={{fontSize:10,fontWeight:700,color:'#374151',margin:'0 0 4px'}}>30-Year Revenue Projection — Year-by-Year Breakdown</p>
+            <p style={{fontSize:9,color:'#9ca3af',margin:'0 0 8px'}}>
+              During existing lease (until {expiry}): existing rent ₹{(ex/1e5).toFixed(1)} L p.a. (fixed). Post-expiry: each scenario's proposed rent escalated at {(g*100).toFixed(2)}% p.a.
+            </p>
+            <div style={{overflowX:'auto'}}>
+              <table style={{borderCollapse:'collapse',fontSize:9,minWidth:680}}>
+                <thead>
+                  <tr>
+                    <th style={Object.assign({},TH,{minWidth:38})}>Year</th>
+                    <th style={Object.assign({},TH,{minWidth:38,textAlign:'center'})}>Phase</th>
+                    <th style={Object.assign({},TH,{minWidth:58,textAlign:'right',background:'#eff6ff',color:'#1e40af'})}>Existing</th>
+                    {SCEN_KEYS.map(function(k){return <th key={k} style={Object.assign({},TH,{minWidth:55,textAlign:'right',background:SCEN_META[k].bg,color:SCEN_META[k].color})}>{SCEN_META[k].short}</th>;})}
+                  </tr>
+                </thead>
+                <tbody>
+                  {Array.from({length:projYears},function(_,i){
+                    const yr=CY+1+i;
+                    const y=i+1;
+                    const yToExp=Math.max(0,expiry-CY);
+                    const inLease=y<=yToExp;
+                    const bg=i%2===0?'#fafafa':'#fff';
+                    return (
+                      <tr key={yr} style={{background:inLease?'#eff6ff':bg}}>
+                        <td style={Object.assign({},TD,{fontWeight:600,color:'#374151'})}>{yr}</td>
+                        <td style={Object.assign({},TD,{textAlign:'center',fontSize:8})}>
+                          <span style={badge(inLease?'#1e40af':'#065f46',inLease?'#dbeafe':'#d1fae5')}>{inLease?'Lease':'New'}</span>
+                        </td>
+                        <td style={Object.assign({},TD,{textAlign:'right',fontFamily:'monospace',color:'#1e40af',background:'#eff6ff'})}>{fmtCr(ex)}</td>
+                        {SCEN_KEYS.map(function(k){
+                          const v=projByScen[k][i];
+                          const isPos=v>=ex;
+                          return <td key={k} style={Object.assign({},TD,{textAlign:'right',fontFamily:'monospace',background:SCEN_META[k].bg+'22',color:inLease?'#6b7280':isPos?'#065f46':'#991b1b'})}>{fmtCr(v)}</td>;
+                        })}
+                      </tr>
+                    );
+                  })}
+                  {/* Cumulative row */}
+                  <tr style={{background:'#1e3a8a',fontWeight:700}}>
+                    <td colSpan={2} style={Object.assign({},TD,{color:'#93c5fd',fontSize:9})}>30-Yr Cumulative</td>
+                    <td style={Object.assign({},TD,{textAlign:'right',fontFamily:'monospace',color:'#fff'})}>{fmtCr(ex*projYears)}</td>
+                    {SCEN_KEYS.map(function(k){
+                      const cum=projByScen[k].reduce(function(s,v){return s+v;},0);
+                      return <td key={k} style={Object.assign({},TD,{textAlign:'right',fontFamily:'monospace',color:cum>=(ex*projYears)?'#bbf7d0':'#fca5a5'})}>{fmtCr(cum)}</td>;
+                    })}
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        )}
+
         {p.notes&&<p style={{fontSize:10,color:'#6b7280',marginTop:8}}>Note: {p.notes}</p>}
       </div>
     </div>
@@ -951,188 +1082,62 @@ function RowDetail({ row, onClose, onEdit }) {
 // ═══════════════════════════════════════════════════════════════════
 function RevenueOverview({ computed, bifurc, ctrl }) {
   const existingTotal = bifurc.total ? bifurc.total.existing : 0;
+  const [selectedScen, setSelectedScen] = useState('opt6');
 
-  // Sort scenarios by revenue descending for the bar
-  const sorted = SCEN_KEYS.slice().sort(function(a,b){
-    return (bifurc.total?bifurc.total[b]:0)-(bifurc.total?bifurc.total[a]:0);
-  });
-  const maxVal = sorted.length > 0 && bifurc.total ? bifurc.total[sorted[0]] : 1;
+  const maxVal = SCEN_KEYS.reduce(function(m,k){ return Math.max(m, bifurc.total?bifurc.total[k]:0); }, existingTotal);
 
-  // Top impact plots (opt6)
-  const topGain = computed.slice().sort(function(a,b){return (b.rents.opt6-b.existing)-(a.rents.opt6-a.existing);}).slice(0,5);
-  const topLoss = computed.slice().sort(function(a,b){return (a.rents.opt6-a.existing)-(b.rents.opt6-b.existing);}).slice(0,5);
+  // Top 5 impact — driven by whichever tile is clicked
+  const topGain = computed.slice().sort(function(a,b){return (b.rents[selectedScen]-b.existing)-(a.rents[selectedScen]-a.existing);}).slice(0,5);
+  const topLoss = computed.slice().sort(function(a,b){return (a.rents[selectedScen]-a.existing)-(b.rents[selectedScen]-b.existing);}).slice(0,5);
 
-  return (
-    <div>
-      {/* Hero — Existing Revenue */}
-      <div style={{background:'linear-gradient(135deg,#1e3a8a,#1e40af)',borderRadius:10,padding:'1.25rem 1.5rem',marginBottom:12,color:'#fff'}}>
-        <p style={{fontSize:11,color:'#93c5fd',margin:'0 0 4px',fontWeight:600,letterSpacing:'0.05em'}}>CURRENT ANNUAL REVENUE — ALL 407 PLOTS</p>
-        <p style={{fontSize:32,fontWeight:800,margin:'0 0 6px',letterSpacing:'-0.02em'}}>{fmtCr(existingTotal)}</p>
-        <div style={{display:'flex',gap:16,flexWrap:'wrap'}}>
-          {['sopc','lpa','reclaimed_pre2018','reclaimed_post2018'].map(function(t){
-            const d=bifurc[t]; if(!d)return null;
-            const tm=TYPE_META[t];
-            return (
-              <div key={t} style={{borderLeft:'2px solid rgba(255,255,255,0.3)',paddingLeft:10}}>
-                <p style={{fontSize:9,color:'#93c5fd',margin:0}}>{tm.label}</p>
-                <p style={{fontSize:14,fontWeight:700,margin:'2px 0 0'}}>{fmtCr(d.existing)}</p>
-                <p style={{fontSize:9,color:'#bfdbfe',margin:0}}>{d.count} plots</p>
-              </div>
-            );
-          })}
-        </div>
-      </div>
+  // 30-year revenue projection — year-by-year aggregate
+  const g = getAnnGrowth(ctrl);
+  const projYears = 30;
+  function projRow(k) {
+    const y1 = bifurc.total ? bifurc.total[k] : 0;
+    return Array.from({length: projYears}, function(_,i){ return y1 * Math.pow(1+g, i); });
+  }
+  const projData = {};
+  SCEN_KEYS.forEach(function(k){ projData[k] = projRow(k); });
+  const projExisting = Array.from({length: projYears}, function(){ return existingTotal; });
+  function cumSum(arr){ let s=0; return arr.map(function(v){s+=v;return s;}); }
 
-      {/* Scenario cards — 4 per row */}
-      <p style={{fontSize:11,fontWeight:700,color:'#374151',margin:'0 0 8px'}}>Year 1 Annual Revenue — All 8 Policy Scenarios</p>
-      <div style={{display:'grid',gridTemplateColumns:'repeat(4,minmax(0,1fr))',gap:8,marginBottom:14}}>
-        {SCEN_KEYS.map(function(k){
-          const sm=SCEN_META[k];
-          const v=bifurc.total?bifurc.total[k]:0;
-          const diff=v-existingTotal;
-          const isPos=diff>=0;
-          const isRec=sm.rec;
-          return (
-            <div key={k} style={{background:'#fff',border:isRec?'2px solid #14532d':'1px solid #e5e7eb',borderRadius:8,padding:'0.75rem',boxShadow:isRec?'0 4px 12px rgba(20,83,45,0.15)':'none'}}>
-              <div style={{display:'flex',justifyContent:'space-between',alignItems:'flex-start',marginBottom:6}}>
-                <span style={badge(sm.color,sm.bg)}>{sm.short}</span>
-                {isRec&&<span style={{fontSize:8,background:'#14532d',color:'#fff',padding:'1px 5px',borderRadius:8,fontWeight:700}}>REC</span>}
-              </div>
-              <p style={{fontSize:9,color:'#6b7280',margin:'0 0 4px',lineHeight:1.3}}>{sm.label}</p>
-              <p style={{fontSize:20,fontWeight:800,margin:'0 0 4px',color:sm.color}}>{fmtCr(v)}</p>
-              <div style={{display:'flex',gap:6,alignItems:'center'}}>
-                <span style={{fontSize:10,fontWeight:700,color:isPos?'#065f46':'#991b1b'}}>{fmtChg(v,existingTotal)}</span>
-                <span style={{fontSize:9,color:'#9ca3af'}}>vs existing</span>
-              </div>
-              {/* Mini bar */}
-              <div style={{height:4,background:'#f3f4f6',borderRadius:2,marginTop:6}}>
-                <div style={{height:'100%',background:sm.color,borderRadius:2,width:Math.max(4,(v/Math.max(maxVal,1))*100)+'%',transition:'width 0.3s'}}/>
-              </div>
-              <div style={{display:'flex',gap:8,marginTop:4}}>
-                <span style={{fontSize:9,color:isPos?'#065f46':'#991b1b',fontWeight:600}}>Δ {diff>=0?'+':''}{fmtCr(Math.abs(diff))}</span>
-              </div>
-            </div>
-          );
-        })}
-      </div>
+  const sm30 = SCEN_META[selectedScen];
 
-      {/* Revenue comparison bar chart (horizontal) */}
-      <div style={{background:'#fff',border:'1px solid #e5e7eb',borderRadius:8,padding:'1rem',marginBottom:12}}>
-        <p style={{fontSize:11,fontWeight:700,color:'#374151',margin:'0 0 10px'}}>Relative Revenue — Sorted by Amount</p>
-        <div style={{display:'flex',flexDirection:'column',gap:5}}>
-          {/* Existing reference */}
-          <div style={{display:'flex',alignItems:'center',gap:8}}>
-            <span style={{fontSize:10,color:'#1e40af',minWidth:68,fontWeight:700}}>Existing</span>
-            <div style={{flex:1,height:18,background:'#dbeafe',borderRadius:3,position:'relative'}}>
-              <div style={{position:'absolute',left:0,top:0,height:'100%',width:(existingTotal/maxVal*100)+'%',background:'#1e40af',borderRadius:3,minWidth:2}}/>
-              <span style={{position:'absolute',right:4,top:1,fontSize:9,color:'#fff',fontWeight:700,lineHeight:'16px'}}>{fmtCr(existingTotal)}</span>
-            </div>
-          </div>
-          {sorted.map(function(k){
-            const sm=SCEN_META[k]; const v=bifurc.total?bifurc.total[k]:0;
-            const w=Math.max(0.5,(v/maxVal)*100);
-            return (
-              <div key={k} style={{display:'flex',alignItems:'center',gap:8}}>
-                <span style={{fontSize:10,minWidth:68,color:sm.color,fontWeight:600}}>{sm.short}</span>
-                <div style={{flex:1,height:18,background:sm.bg,borderRadius:3,position:'relative'}}>
-                  <div style={{position:'absolute',left:0,top:0,height:'100%',width:w+'%',background:sm.color,borderRadius:3,minWidth:2}}/>
-                  <span style={{position:'absolute',right:4,top:1,fontSize:9,color:'#fff',fontWeight:700,lineHeight:'16px'}}>{fmtCr(v)}</span>
-                </div>
-              </div>
-            );
-          })}
-        </div>
-      </div>
-
-      {/* Land type bifurcation */}
-      <div style={{background:'#fff',border:'1px solid #e5e7eb',borderRadius:8,padding:'1rem',marginBottom:12}}>
-        <p style={{fontSize:11,fontWeight:700,color:'#374151',margin:'0 0 8px'}}>Revenue Bifurcation — Land Type × Scenario (₹ Crore)</p>
-        <div style={{overflowX:'auto'}}>
-          <table style={{width:'100%',borderCollapse:'collapse',fontSize:10}}>
-            <thead>
-              <tr>
-                <th style={Object.assign({},TH,{minWidth:110})}>Land Type</th>
-                <th style={Object.assign({},TH,{minWidth:40,textAlign:'right'})}>Plots</th>
-                <th style={Object.assign({},TH,{minWidth:70,textAlign:'right',background:'#dbeafe',color:'#1e40af'})}>Existing</th>
-                {SCEN_KEYS.map(function(k){return <th key={k} style={Object.assign({},TH,{minWidth:60,textAlign:'right',background:SCEN_META[k].bg,color:SCEN_META[k].color})}>{SCEN_META[k].short}</th>;})}
-              </tr>
-            </thead>
-            <tbody>
-              {['sopc','lpa','reclaimed_pre2018','reclaimed_post2018','total'].map(function(t,ti){
-                const d=bifurc[t]; if(!d)return null;
-                const isTotal=t==='total';
-                const tm=TYPE_META[t];
-                return (
-                  <tr key={t} style={{background:isTotal?'#f0f9ff':ti%2===0?'#fafafa':'#fff',fontWeight:isTotal?700:400}}>
-                    <td style={Object.assign({},TD,{fontWeight:isTotal?700:500})}>
-                      {tm?<span style={badge(tm.color,tm.bg)}>{tm.label}</span>:<strong>TOTAL</strong>}
-                    </td>
-                    <td style={Object.assign({},TD,{textAlign:'right',color:'#9ca3af'})}>{d.count}</td>
-                    <td style={Object.assign({},TD,{textAlign:'right',fontFamily:'monospace',background:'#eff6ff',fontWeight:isTotal?700:600})}>{fmtCr(d.existing)}</td>
-                    {SCEN_KEYS.map(function(k){
-                      const diff=d[k]-d.existing;const isPos=diff>=0;
-                      return (
-                        <td key={k} style={Object.assign({},TD,{textAlign:'right',background:SCEN_META[k].bg+'33'})}>
-                          <div style={{fontFamily:'monospace',fontWeight:isTotal?700:500}}>{fmtCr(d[k])}</div>
-                          {!isTotal&&<div style={{fontSize:8,color:isPos?'#065f46':'#991b1b',fontWeight:700}}>{fmtChg(d[k],d.existing)}</div>}
-                        </td>
-                      );
-                    })}
-                  </tr>
-                );
-              })}
-            </tbody>
-          </table>
-        </div>
-      </div>
-
-      {/* Top impact plots */}
-      <div style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:10}}>
-        <div style={{background:'#fff',border:'1px solid #e5e7eb',borderRadius:8,padding:'0.875rem'}}>
-          <p style={{fontSize:11,fontWeight:700,color:'#065f46',margin:'0 0 8px'}}>↑ Top 5 — Highest Revenue Gain (vs Existing, under Opt 6)</p>
-          {topGain.map(function(row,i){
-            const diff=row.rents.opt6-row.existing;
-            return (
-              <div key={row.p.id} style={{display:'flex',alignItems:'center',justifyContent:'space-between',padding:'4px 0',borderBottom:i<4?'1px solid #f3f4f6':'none'}}>
-                <div style={{flex:1,minWidth:0}}>
-                  <p style={{fontSize:10,fontWeight:600,margin:0,overflow:'hidden',textOverflow:'ellipsis',whiteSpace:'nowrap',color:'#111'}}>{row.p.name}</p>
-                  <p style={{fontSize:9,color:'#6b7280',margin:0}}>{row.p.port} · {fmtA(row.p.area)}</p>
-                </div>
-                <div style={{textAlign:'right',flexShrink:0,marginLeft:8}}>
-                  <p style={{fontSize:11,fontWeight:700,color:'#065f46',margin:0}}>+{fmtCr(diff)}</p>
-                  <p style={{fontSize:9,color:'#9ca3af',margin:0}}>{fmtChg(row.rents.opt6,row.existing)}</p>
-                </div>
-              </div>
-            );
-          })}
-        </div>
-        <div style={{background:'#fff',border:'1px solid #e5e7eb',borderRadius:8,padding:'0.875rem'}}>
-          <p style={{fontSize:11,fontWeight:700,color:'#991b1b',margin:'0 0 8px'}}>↓ Top 5 — Highest Revenue Reduction (vs Existing, under Opt 6)</p>
-          {topLoss.map(function(row,i){
-            const diff=row.rents.opt6-row.existing;
-            return (
-              <div key={row.p.id} style={{display:'flex',alignItems:'center',justifyContent:'space-between',padding:'4px 0',borderBottom:i<4?'1px solid #f3f4f6':'none'}}>
-                <div style={{flex:1,minWidth:0}}>
-                  <p style={{fontSize:10,fontWeight:600,margin:0,overflow:'hidden',textOverflow:'ellipsis',whiteSpace:'nowrap',color:'#111'}}>{row.p.name}</p>
-                  <p style={{fontSize:9,color:'#6b7280',margin:0}}>{row.p.port} · {fmtA(row.p.area)}</p>
-                </div>
-                <div style={{textAlign:'right',flexShrink:0,marginLeft:8}}>
-                  <p style={{fontSize:11,fontWeight:700,color:'#991b1b',margin:0}}>{fmtCr(diff)}</p>
-                  <p style={{fontSize:9,color:'#9ca3af',margin:0}}>{fmtChg(row.rents.opt6,row.existing)}</p>
-                </div>
-              </div>
-            );
-          })}
-        </div>
-      </div>
-    </div>
-  );
-}
 
 // ═══════════════════════════════════════════════════════════════════
 // TAB 2 — DETAILED MATRIX
 // ═══════════════════════════════════════════════════════════════════
-function DetailedMatrix({ computed, onRowClick }) {
+function DetailedMatrix({ computed, onRowClick, ctrl }) {
+  const [search,setSearch]=useState('');
+  const [filt,setFilt]=useState({land:'All',port:'All',status:'All',impact:'All',slab:'All'});
+  const [sortK,setSortK]=useState('impact');
+  const [pg,setPg]=useState(0);
+  const PGS=25;
+
+  const filtered=useMemo(function(){
+    let arr=computed;
+    if(filt.land!=='All')arr=arr.filter(function(r){return r.p.landType===filt.land;});
+    if(filt.port!=='All')arr=arr.filter(function(r){return r.p.port===filt.port;});
+    if(filt.status!=='All')arr=arr.filter(function(r){return r.p.status===filt.status;});
+    if(filt.impact==='Higher')arr=arr.filter(function(r){return r.rents.opt6>r.existing+1;});
+    if(filt.impact==='Lower') arr=arr.filter(function(r){return r.rents.opt6<r.existing-1;});
+    if(filt.slab!=='All'){
+      const slabIdx=parseInt(filt.slab,10);
+      arr=arr.filter(function(r){return slabI(r.p.area, ctrl.slabBounds)===slabIdx;});
+    }
+    if(search){const q=search.toLowerCase();arr=arr.filter(function(r){return r.p.name.toLowerCase().includes(q)||r.p.port.toLowerCase().includes(q);});}
+    if(sortK==='impact')   arr=arr.slice().sort(function(a,b){return Math.abs(b.rents.opt6-b.existing)-Math.abs(a.rents.opt6-a.existing);});
+    else if(sortK==='area')     arr=arr.slice().sort(function(a,b){return b.p.area-a.p.area;});
+    else if(sortK==='existing') arr=arr.slice().sort(function(a,b){return b.existing-a.existing;});
+    else if(sortK==='expiry')   arr=arr.slice().sort(function(a,b){return a.p.yearsLeft-b.p.yearsLeft;});
+    return arr;
+  },[computed,filt,search,sortK,ctrl]);
+
+  const paged=filtered.slice(pg*PGS,(pg+1)*PGS);
+  const totalPg=Math.ceil(filtered.length/PGS);
+
+  function setF(k){return function(v){setFilt(function(f){return Object.assign({},f,{[k]:v});});setPg(0);};}
   const [search,setSearch]=useState('');
   const [filt,setFilt]=useState({land:'All',port:'All',status:'All',impact:'All'});
   const [sortK,setSortK]=useState('impact');
@@ -1176,6 +1181,13 @@ function DetailedMatrix({ computed, onRowClick }) {
         </select>
         <select style={SEL} value={filt.impact} onChange={function(e){setF('impact')(e.target.value);}}>
           <option value="All">All impacts</option><option value="Higher">↑ Higher</option><option value="Lower">↓ Lower</option>
+        </select>
+        <select style={SEL} value={filt.slab} onChange={function(e){setF('slab')(e.target.value);}}>
+          <option value="All">All slabs</option>
+          <option value="0">Slab I (0 – {ctrl.slabBounds[0].toLocaleString('en-IN')} sqm)</option>
+          <option value="1">Slab II ({ctrl.slabBounds[0].toLocaleString('en-IN')} – {ctrl.slabBounds[1].toLocaleString('en-IN')} sqm)</option>
+          <option value="2">Slab III ({ctrl.slabBounds[1].toLocaleString('en-IN')} – {ctrl.slabBounds[2].toLocaleString('en-IN')} sqm)</option>
+          <option value="3">Slab IV (&gt;{ctrl.slabBounds[2].toLocaleString('en-IN')} sqm)</option>
         </select>
         <select style={SEL} value={sortK} onChange={function(e){setSortK(e.target.value);}}>
           <option value="impact">Sort: Impact</option><option value="area">Sort: Area</option>
@@ -1556,7 +1568,7 @@ export default function App() {
         {/* MAIN CONTENT */}
         <div style={{flex:1,minWidth:0}}>
           {mainTab === 0 && <RevenueOverview computed={computed} bifurc={bifurc} ctrl={ctrl}/>}
-          {mainTab === 1 && <DetailedMatrix computed={computed} onRowClick={function(row){setDetail(row);}}/>}
+          {mainTab === 1 && <DetailedMatrix computed={computed} onRowClick={function(row){setDetail(row);}} ctrl={ctrl}/>}
         </div>
       </div>
 
@@ -1568,7 +1580,8 @@ export default function App() {
       {detail && (
         <RowDetail row={detail}
           onClose={function(){setDetail(null);}}
-          onEdit={function(){setEditP(detail.p);setDetail(null);}}/>
+          onEdit={function(){setEditP(detail.p);setDetail(null);}}
+          ctrl={ctrl}/>
       )}
     </div>
   );
