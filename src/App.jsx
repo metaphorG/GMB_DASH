@@ -167,8 +167,18 @@ const INIT_PLOTS = buildPlots();
 
 const DEF_CTRL = {
   sopcCurRate:1018, sopcRevRate:1200,
-  pgVals:[6000,4000,4000,3000],
-  pgAcqPsqm:[400,300,250,200],
+  portVals:{
+    Alang:3000, Bhavnagar:5000, Jafrabad:2500, Jamnagar:4000,
+    Magdalla:6000, Mandvi:3000, Mangrol:2000, Navlakhi:2000,
+    Okha:3000, Porbandar:4000, Veraval:3000,
+    Dahej:7000, Hazira:8000, Mundra:10000,
+  },
+  portAcq:{
+    Alang:200, Bhavnagar:300, Jafrabad:175, Jamnagar:250,
+    Magdalla:350, Mandvi:200, Mangrol:150, Navlakhi:150,
+    Okha:200, Porbandar:250, Veraval:200,
+    Dahej:400, Hazira:450, Mundra:500,
+  },
   slabBounds:[1000,10000,100000],
   slabPcts:[100,90,70,50],
   slabUF:[90,85,70,35],
@@ -269,25 +279,45 @@ function ControlPanel({ c, setC }) {
         </div>
       </CPSec>
 
-      {/* B — Port Valuations */}
+      {/* B — Port Valuations — PORT-WISE */}
       <CPSec label="B — Port Valuations (₹/sqm)" open={open.pvals} onToggle={function(){tog('pvals');}}>
-        <p style={{fontSize:9,color:'#9ca3af',marginBottom:6}}>Group Jantri value — fallback when no individual value entered on plot</p>
-        <div style={{fontSize:9,fontWeight:700,color:'#374151',marginBottom:4}}>Current Jantri (Opt 1 &amp; 2):</div>
-        {PG_NAMES.map(function(g,i){
+        <p style={{fontSize:9,color:'#9ca3af',marginBottom:6}}>Per-port Jantri &amp; acquisition cost. Overridden by individual plot value if entered.</p>
+        {/* Column headers */}
+        <div style={{display:'grid',gridTemplateColumns:'80px 1fr 1fr',gap:'3px 6px',alignItems:'center',marginBottom:4}}>
+          <span style={{fontSize:8,color:'#9ca3af',fontWeight:700}}/>
+          <span style={{fontSize:8,color:'#1e40af',fontWeight:700,textAlign:'center'}}>Jantri ₹/sqm</span>
+          <span style={{fontSize:8,color:'#065f46',fontWeight:700,textAlign:'center'}}>Hist. Acq ₹/sqm</span>
+        </div>
+        {PORT_NAMES.map(function(port){
           return (
-            <CPRow key={g} label={g.replace(' Coast','').replace('Saurashtra ','Srt ')}>
-              <input type="number" style={INP} value={c.pgVals[i]} onChange={function(e){updArr('pgVals',i)(+e.target.value);}}/>
-            </CPRow>
+            <div key={port} style={{display:'grid',gridTemplateColumns:'80px 1fr 1fr',gap:'3px 6px',alignItems:'center',marginBottom:3}}>
+              <span style={{fontSize:10,color:'#374151',fontWeight:500,overflow:'hidden',textOverflow:'ellipsis',whiteSpace:'nowrap'}} title={port}>{port}</span>
+              <input type="number"
+                style={{fontSize:10,padding:'3px 5px',border:'1px solid #bfdbfe',borderRadius:3,width:'100%',boxSizing:'border-box',textAlign:'right',color:'#1e40af',background:'#eff6ff'}}
+                value={c.portVals[port] || 0}
+                onChange={function(e){
+                  setC(function(p){
+                    const v=Object.assign({},p.portVals); v[port]=+e.target.value;
+                    return Object.assign({},p,{portVals:v});
+                  });
+                }}/>
+              <input type="number"
+                style={{fontSize:10,padding:'3px 5px',border:'1px solid #bbf7d0',borderRadius:3,width:'100%',boxSizing:'border-box',textAlign:'right',color:'#065f46',background:'#f0fdf4'}}
+                value={c.portAcq[port] || 0}
+                onChange={function(e){
+                  setC(function(p){
+                    const v=Object.assign({},p.portAcq); v[port]=+e.target.value;
+                    return Object.assign({},p,{portAcq:v});
+                  });
+                }}/>
+            </div>
           );
         })}
-        <div style={{fontSize:9,fontWeight:700,color:'#374151',margin:'8px 0 4px'}}>Historical Acq. Cost ₹/sqm (IRR-Actual):</div>
-        {PG_NAMES.map(function(g,i){
-          return (
-            <CPRow key={g+'a'} label={g.replace(' Coast','').replace('Saurashtra ','Srt ')}>
-              <input type="number" style={INP} value={c.pgAcqPsqm[i]} onChange={function(e){updArr('pgAcqPsqm',i)(+e.target.value);}}/>
-            </CPRow>
-          );
-        })}
+        <div style={{display:'grid',gridTemplateColumns:'80px 1fr 1fr',gap:'0 6px',marginTop:4}}>
+          <span/>
+          <span style={{fontSize:8,color:'#9ca3af',textAlign:'center'}}>for Opt 1 &amp; 2</span>
+          <span style={{fontSize:8,color:'#9ca3af',textAlign:'center'}}>for IRR(Actual)</span>
+        </div>
       </CPSec>
 
       {/* C — Slab Configuration — COMPACT FIXED LAYOUT */}
@@ -580,7 +610,7 @@ function RevenueOverview({ computed, bifurc, ctrl }) {
     <div>
       {/* Hero — Existing Revenue */}
       <div style={{background:'linear-gradient(135deg,#1e3a8a,#1e40af)',borderRadius:10,padding:'1.25rem 1.5rem',marginBottom:12,color:'#fff'}}>
-        <p style={{fontSize:11,color:'#93c5fd',margin:'0 0 4px',fontWeight:600,letterSpacing:'0.05em'}}>CURRENT ANNUAL REVENUE</p>
+        <p style={{fontSize:11,color:'#93c5fd',margin:'0 0 4px',fontWeight:600,letterSpacing:'0.05em'}}>CURRENT ANNUAL REVENUE — ALL 407 PLOTS</p>
         <p style={{fontSize:32,fontWeight:800,margin:'0 0 6px',letterSpacing:'-0.02em'}}>{fmtCr(existingTotal)}</p>
         <div style={{display:'flex',gap:16,flexWrap:'wrap'}}>
           {['sopc','lpa','reclaimed_pre2018','reclaimed_post2018'].map(function(t){
@@ -971,8 +1001,8 @@ export default function App() {
     const g = getAnnGrowth(ctrl);
     const fp = getFreshPct(ctrl);
     return plots.map(function(p){
-      const pv      = p.indivVal || ctrl.pgVals[p.pgIdx] || 3000;
-      const acqPsqm = p.acqValPsqm || ctrl.pgAcqPsqm[p.pgIdx] || 300;
+      const pv      = p.indivVal || ctrl.portVals[p.port] || 3000;
+      const acqPsqm = p.acqValPsqm || ctrl.portAcq[p.port] || 300;
       const invA    = p.acqCr > 0 ? p.acqCr*1e7 : p.area*acqPsqm;
       const invR    = p.area * pv;
       const slFact  = margF(p.area, ctrl.slabBounds, ctrl.slabPcts)/100;
