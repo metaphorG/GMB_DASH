@@ -125,6 +125,9 @@ mustRegex(
 'projectedExistingRent(p, yr)');
 mustReplace(`style={{position:'fixed',inset:0,background:'rgba(0,0,0,0.5)',zIndex:999,display:'flex',alignItems:'flex-start',justifyContent:'flex-end'}}`, `style={{position:'fixed',inset:0,background:'rgba(15,23,42,0.58)',zIndex:999,display:'flex',alignItems:'center',justifyContent:'center',padding:18}}`);
 mustReplace(`style={{background:'#fff',width:580,height:'100%',overflowY:'auto',padding:'1.25rem',boxShadow:'-10px 0 40px rgba(0,0,0,0.15)'}}`, `style={{background:'#fff',width:'min(1180px,96vw)',maxHeight:'92vh',overflowY:'auto',padding:'1.25rem',borderRadius:10,boxShadow:'0 24px 80px rgba(0,0,0,0.28)'}}`);
+mustReplace(
+`                const sm2=SCEN_META[k],r=rents[k],ir=irrs[k],diff=r-ex,isPos=diff>=0;`,
+`                const sm2=SCEN_META[k],r=(row.postExpiryRents && row.postExpiryRents[k] !== undefined ? row.postExpiryRents[k] : rents[k]),ir=irrs[k],diff=r-ex,isPos=diff>=0;`);
 
 mustReplace(
 `  const g = getAnnGrowth(ctrl);
