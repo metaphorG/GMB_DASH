@@ -190,7 +190,16 @@ mustReplace(
 `      const isLpa   = p.landType === 'lpa';
       const baseEx  = isLpa ? projectedExistingRent(p, CY) : p.currentRent;
       const existing= (ctrl.holdoverOn&&status==='expired') ? baseEx*ctrl.penaltyMult : baseEx;
+      const postExpiryBase = isLpa ? projectedExistingRent(p, expiry) : baseEx;
       const isActiveLpa = isLpa && yearsLeft > 0;`);
+mustReplace(`        if(k==='opt3')     return baseEx;
+        if(k==='opt4')     return baseEx*(1+ctrl.wpiRate/100);
+        if(k==='opt5')     return baseEx*1.5;
+        if(k==='opt6')     return baseEx*(1+ctrl.blockPct/100);`,
+`        if(k==='opt3')     return postExpiryBase;
+        if(k==='opt4')     return postExpiryBase*(1+ctrl.wpiRate/100);
+        if(k==='opt5')     return postExpiryBase*1.5;
+        if(k==='opt6')     return postExpiryBase*(1+ctrl.blockPct/100);`);
 mustReplace(
 `      const rents={};
       SCEN_KEYS.forEach(function(k){rents[k]=firm(k)*effReclF;});`,
