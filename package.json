@@ -2,7 +2,9 @@
   "name": "gmb-dashboard",
   "version": "1.0.0",
   "scripts": {
+    "predev": "node scripts/patch-app.cjs",
     "dev": "vite",
+    "prebuild": "node scripts/patch-app.cjs",
     "build": "vite build",
     "preview": "vite preview"
   },
