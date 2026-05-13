@@ -10,6 +10,21 @@ function mustReplace(needle, replacement) {
   s = s.replace(needle, replacement);
 }
 
+function replaceIfPresent(needle, replacement) {
+  if (s.includes(replacement)) return true;
+  if (!s.includes(needle)) return false;
+  s = s.replace(needle, replacement);
+  return true;
+}
+
+function mustReplaceAny(needles, replacement) {
+  if (s.includes(replacement)) return;
+  for (const needle of needles) {
+    if (replaceIfPresent(needle, replacement)) return;
+  }
+  throw new Error('Patch target not found');
+}
+
 function mustRegex(pattern, replacement, marker) {
   if (marker && s.includes(marker)) return;
   if (!pattern.test(s)) throw new Error('Patch target not found');
@@ -17,7 +32,7 @@ function mustRegex(pattern, replacement, marker) {
 }
 
 mustRegex(
-/function buildCFs\(inv, yr1, g, horizon, residual, expiry, curRent\) \{[\s\S]*?\n\}\nfunction fmtCr/,
+/(function getLpaEscSpec\(p\) \{[\s\S]*?function projectedExistingRent\(p, year\) \{[\s\S]*?function buildCFs\(inv, yr1, g, horizon, residual, expiry, curRent, p\) \{[\s\S]*?\n\}\nfunction fmtCr|function buildCFs\(inv, yr1, g, horizon, residual, expiry, curRent\) \{[\s\S]*?\n\}\nfunction fmtCr)/,
 `function getLpaEscSpec(p) {
   const nm = ((p && p.name) || '').toLowerCase();
   const port = ((p && p.port) || '').toLowerCase();
@@ -45,19 +60,32 @@ function projectedExistingRent(p, year) {
   if (spec.components) return spec.components.reduce(function(sum, part){ return sum + escalatedRent(part.base, year, part); }, 0);
   return escalatedRent(p.currentRent || 0, year, spec);
 }
-function buildCFs(inv, yr1, g, horizon, residual, expiry, curRent, p) {
+function getPolicyEscSpec(c) {
+  if (!c || c.escType === 'wpi') return { mode: 'annual', rate: ((c && c.wpiRate) || 0) / 100 };
+  if (c.escType === '10pct3yr') return { mode: 'step', pct: 10, period: 3 };
+  if (c.escType === '20pct3yr') return { mode: 'step', pct: 20, period: 3 };
+  return { mode: 'step', pct: c.escPct || 0, period: Math.max(1, c.escPeriod || 1) };
+}
+function projectedPolicyRent(base, yearsAfterStart, c) {
+  const spec = getPolicyEscSpec(c);
+  const yrs = Math.max(0, yearsAfterStart || 0);
+  if (spec.mode === 'annual') return (base || 0) * Math.pow(1 + spec.rate, yrs);
+  const blocks = Math.floor(yrs / Math.max(1, spec.period || 1));
+  return (base || 0) * Math.pow(1 + (spec.pct || 0) / 100, blocks);
+}
+function buildCFs(inv, yr1, g, horizon, residual, expiry, curRent, p, ctrl) {
   if (inv <= 0) return null;
   const cfs = [-inv];
   const yToExp = Math.max(0, expiry - CY);
   for (let y = 1; y <= horizon; y++) {
     if (y <= yToExp) cfs.push(p && p.landType === 'lpa' ? projectedExistingRent(p, CY + y) : curRent);
-    else cfs.push(yr1 * Math.pow(1 + g, y - yToExp - 1));
+    else cfs.push(projectedPolicyRent(yr1, y - yToExp - 1, ctrl));
   }
   cfs[cfs.length - 1] += residual;
   return cfs;
 }
 function fmtCr`,
-'function projectedExistingRent');
+'function projectedPolicyRent');
 
 mustReplace(
 `const INIT_PLOTS = buildPlots();
@@ -135,6 +163,8 @@ mustRegex(
       if (p.landType === 'sopc' && (k === 'sopc_cur' || k === 'sopc_rev')) return yr1 * Math.pow(1 + sopcG, y - 1);
       if (y <= yToExp) return p.landType === 'lpa' ? projectedExistingRent(p, yr) : ex;`,
 'projectedExistingRent(p, yr)');
+mustReplace(`      return yr1 * Math.pow(1 + g, y - yToExp - 1);`, `      return projectedPolicyRent(yr1, y - yToExp - 1, ctrl);`);
+replaceIfPresent(`        return sum + yr1 * Math.pow(1 + g, y - yToExp - 1);`, `        return sum + projectedPolicyRent(yr1, y - yToExp - 1, ctrl);`);
 mustReplace(`style={{position:'fixed',inset:0,background:'rgba(0,0,0,0.5)',zIndex:999,display:'flex',alignItems:'flex-start',justifyContent:'flex-end'}}`, `style={{position:'fixed',inset:0,background:'rgba(15,23,42,0.58)',zIndex:999,display:'flex',alignItems:'center',justifyContent:'center',padding:18}}`);
 mustReplace(`style={{background:'#fff',width:580,height:'100%',overflowY:'auto',padding:'1.25rem',boxShadow:'-10px 0 40px rgba(0,0,0,0.15)'}}`, `style={{background:'#fff',width:'min(1180px,96vw)',maxHeight:'92vh',overflowY:'auto',padding:'1.25rem',borderRadius:10,boxShadow:'0 24px 80px rgba(0,0,0,0.28)'}}`);
 mustReplace(
@@ -169,7 +199,7 @@ mustReplace(
         if (p.landType === 'sopc' && (k === 'sopc_cur' || k === 'sopc_rev')) return sum + yr1 * Math.pow(1 + sopcG, i);
         if (p.landType === 'lpa' && y <= yToExp) return sum + projectedExistingRent(p, yr);
         if (y <= yToExp) return sum + row.existing;
-        return sum + yr1 * Math.pow(1 + g, y - yToExp - 1);
+        return sum + projectedPolicyRent(yr1, y - yToExp - 1, ctrl);
       }, 0);
     });
   }
@@ -211,8 +241,8 @@ mustReplace(
         rents[k] = (isActiveLpa && k.indexOf('opt') === 0) ? existing : raw;
       });`);
 mustReplace(`        const yr1=rents[k];`, `        const yr1=postExpiryRents[k];`);
-mustReplace(`        const cfsA=buildCFs(invA,yr1,g,ctrl.irrHorizon,resA,expiry,baseEx);`, `        const cfsA=buildCFs(invA,yr1,g,ctrl.irrHorizon,resA,expiry,baseEx,p);`);
-mustReplace(`        const cfsR=buildCFs(invR,yr1,g,ctrl.irrHorizon,resR,expiry,baseEx);`, `        const cfsR=buildCFs(invR,yr1,g,ctrl.irrHorizon,resR,expiry,baseEx,p);`);
+mustReplaceAny([`        const cfsA=buildCFs(invA,yr1,g,ctrl.irrHorizon,resA,expiry,baseEx);`, `        const cfsA=buildCFs(invA,yr1,g,ctrl.irrHorizon,resA,expiry,baseEx,p);`], `        const cfsA=buildCFs(invA,yr1,g,ctrl.irrHorizon,resA,expiry,baseEx,p,ctrl);`);
+mustReplaceAny([`        const cfsR=buildCFs(invR,yr1,g,ctrl.irrHorizon,resR,expiry,baseEx);`, `        const cfsR=buildCFs(invR,yr1,g,ctrl.irrHorizon,resR,expiry,baseEx,p);`], `        const cfsR=buildCFs(invR,yr1,g,ctrl.irrHorizon,resR,expiry,baseEx,p,ctrl);`);
 mustReplace(`return {p:Object.assign({},p,{status,expiry,yearsLeft}), pv, acqPsqm, existing, rents, irrs, isRec, effReclF};`, `return {p:Object.assign({},p,{status,expiry,yearsLeft}), pv, acqPsqm, existing, rents, postExpiryRents, irrs, isRec, effReclF, isActiveLpa};`);
 
 fs.writeFileSync(appPath, s);
