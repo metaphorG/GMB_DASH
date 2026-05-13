@@ -21,17 +21,29 @@ mustRegex(
 `function getLpaEscSpec(p) {
   const nm = ((p && p.name) || '').toLowerCase();
   const port = ((p && p.port) || '').toLowerCase();
-  if (nm.includes('gujarat adani') || nm.includes('adani port') || port === 'mundra') return { pct: 20, period: 3 };
-  return { pct: 10, period: 3 };
+  if (nm.includes('gujarat adani') || nm.includes('apsezl') || port === 'mundra') return { pct: 20, period: 3, firstRevisionYear: 2003 };
+  if (nm.includes('swan lng') && (p.currentRent || 0) > 0) return { pct: 10, period: 3, firstRevisionYear: 2020 };
+  if (nm.includes('bhavnagar port infrastructure') && (p.currentRent || 0) > 0) return { pct: 10, period: 3, firstRevisionYear: 2027 };
+  if (nm.includes('nauyaan shipyard')) return {
+    components: [
+      { base: 268215 * 48.72, pct: 10, period: 3, firstRevisionYear: 2027 },
+      { base: 20286 * 55, pct: 10, period: 3, firstRevisionYear: 2025 },
+    ],
+  };
+  return { pct: 10, period: 3, firstRevisionYear: (p.leaseStart || CY) + 3 };
 }
-function escalatedRent(base, startYear, targetYear, spec) {
-  const years = Math.max(0, targetYear - (startYear || CY));
-  const blocks = Math.floor(years / Math.max(1, spec.period || 3));
+function escalatedRent(base, targetYear, spec) {
+  if (!base) return 0;
+  if (spec.firstRevisionYear && targetYear < spec.firstRevisionYear) return base;
+  const firstYear = spec.firstRevisionYear || ((spec.startYear || CY) + (spec.period || 3));
+  const blocks = targetYear >= firstYear ? 1 + Math.floor((targetYear - firstYear) / Math.max(1, spec.period || 3)) : 0;
   return (base || 0) * Math.pow(1 + (spec.pct || 0) / 100, blocks);
 }
 function projectedExistingRent(p, year) {
   if (p.landType !== 'lpa') return p.currentRent || 0;
-  return escalatedRent(p.currentRent || 0, p.leaseStart || CY, year, getLpaEscSpec(p));
+  const spec = getLpaEscSpec(p);
+  if (spec.components) return spec.components.reduce(function(sum, part){ return sum + escalatedRent(part.base, year, part); }, 0);
+  return escalatedRent(p.currentRent || 0, year, spec);
 }
 function buildCFs(inv, yr1, g, horizon, residual, expiry, curRent, p) {
   if (inv <= 0) return null;
@@ -152,7 +164,7 @@ mustReplace(
         const yToExp = Math.max(0, expiry - CY);
         const yr1 = row.postExpiryRents && row.postExpiryRents[k] !== undefined ? row.postExpiryRents[k] : row.rents[k];
         if (p.landType === 'sopc' && (k === 'sopc_cur' || k === 'sopc_rev')) return sum + yr1 * Math.pow(1 + sopcG, i);
-        if (p.landType === 'lpa' && y <= yToExp && k.indexOf('opt') === 0) return sum + projectedExistingRent(p, yr);
+        if (p.landType === 'lpa' && y <= yToExp) return sum + projectedExistingRent(p, yr);
         if (y <= yToExp) return sum + row.existing;
         return sum + yr1 * Math.pow(1 + g, y - yToExp - 1);
       }, 0);
