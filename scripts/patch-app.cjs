@@ -89,8 +89,7 @@ const DEF_CTRL = {`);
 
 mustReplace(`escType:'20pct3yr', escPct:20, escPeriod:3, wpiRate:6,`, `escType:'20pct3yr', escPct:20, escPeriod:3, wpiRate:6, sopcWpiRate:5,`);
 mustRegex(
-/(<input type="number" style=\{INP\} value=\{c\.sopcRevRate\} onChange=\{function\(e\)\{upd\('sopcRevRate'\)\(\+e\.target\.value\);\}\}\/>
-\s*<\/CPRow>)/,
+/(<input type="number" style=\{INP\} value=\{c\.sopcRevRate\} onChange=\{function\(e\)\{upd\('sopcRevRate'\)\(\+e\.target\.value\);\}\}\/>\s*<\/CPRow>)/,
 `$1
         <CPRow label="Projection WPI %">
           <input type="number" step="0.1" style={INP} value={c.sopcWpiRate} onChange={function(e){upd('sopcWpiRate')(+e.target.value);}}/>
