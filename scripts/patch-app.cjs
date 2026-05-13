@@ -57,6 +57,7 @@ function sameVal(a, b) {
   return a === b || (a === null && b === undefined) || (a === undefined && b === null);
 }
 function computeDelta(plots) {
+  if (!plots || plots.length === 0) return { edited: [], added: [], deleted: [] };
   const baseById = {};
   INIT_PLOTS.forEach(function(p){ baseById[p.id] = p; });
   const currentById = {};
@@ -77,6 +78,7 @@ function computeDelta(plots) {
 }
 function applyDelta(delta) {
   if (!delta) return INIT_PLOTS;
+  if ((delta.deleted || []).length >= INIT_PLOTS.length && !(delta.edited || []).length && !(delta.added || []).length) return INIT_PLOTS;
   const deleted = {};
   (delta.deleted || []).forEach(function(id){ deleted[id] = true; });
   const edits = {};
