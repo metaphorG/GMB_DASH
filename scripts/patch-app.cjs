@@ -140,6 +140,9 @@ mustReplace(`style={{background:'#fff',width:580,height:'100%',overflowY:'auto',
 mustReplace(
 `                const sm2=SCEN_META[k],r=rents[k],ir=irrs[k],diff=r-ex,isPos=diff>=0;`,
 `                const sm2=SCEN_META[k],r=(row.postExpiryRents && row.postExpiryRents[k] !== undefined ? row.postExpiryRents[k] : rents[k]),ir=irrs[k],diff=r-ex,isPos=diff>=0;`);
+mustReplace(
+`<td style={Object.assign({},TD,{textAlign:'right',fontFamily:'monospace',color:'#1e40af',background:'#eff6ff'})}>{fmtCr(ex)}</td>`,
+`<td style={Object.assign({},TD,{textAlign:'right',fontFamily:'monospace',color:'#1e40af',background:'#eff6ff'})}>{fmtCr(p.landType === 'lpa' ? projectedExistingRent(p, yr) : (p.landType === 'sopc' ? projByScen.sopc_cur[i] : ex))}</td>`);
 
 mustReplace(
 `  const g = getAnnGrowth(ctrl);
@@ -174,7 +177,11 @@ mustReplace(
   SCEN_KEYS.forEach(function(k){ projData[k] = projRow(k); });
   const projExisting = Array.from({length: projYears}, function(_,i){
     const yr = CY + i + 1;
-    return computed.reduce(function(sum,row){ return sum + (row.p.landType === 'lpa' ? projectedExistingRent(row.p, yr) : row.existing); }, 0);
+    return computed.reduce(function(sum,row){
+      if (row.p.landType === 'lpa') return sum + projectedExistingRent(row.p, yr);
+      if (row.p.landType === 'sopc') return sum + (row.rents.sopc_cur || row.existing) * Math.pow(1 + sopcG, i);
+      return sum + row.existing;
+    }, 0);
   });`);
 
 mustReplace(
