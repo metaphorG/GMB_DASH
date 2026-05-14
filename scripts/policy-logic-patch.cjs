@@ -119,7 +119,7 @@ function fmtCr`,
 
 replaceOnce(
 `  const g = ctrl ? getAnnGrowth(ctrl) : 0.063;
-  const sopcG = ctrl ? (ctrl.sopcWpiRate || 0) / 100;
+  const sopcG = ctrl ? (ctrl.sopcWpiRate || 0) / 100 : 0;
   const expiry = (p.leaseStart||CY)+(p.leaseTerm||30);
   const projYears = 30;`,
 `  const g = ctrl ? getAnnGrowth(ctrl) : 0.063;
