@@ -2,9 +2,9 @@
   "name": "gmb-dashboard",
   "version": "1.0.0",
   "scripts": {
-    "predev": "node scripts/patch-app.cjs && node scripts/policy-logic-runner.cjs && node scripts/reclaim-new-patch.cjs && node scripts/detail-ui-patch.cjs",
+    "predev": "node scripts/patch-app.cjs && node scripts/policy-logic-runner.cjs && node scripts/reclaim-new-patch.cjs && node scripts/detail-ui-patch.cjs && node scripts/scenario-sync-patch.cjs",
     "dev": "vite",
-    "prebuild": "node scripts/patch-app.cjs && node scripts/policy-logic-runner.cjs && node scripts/reclaim-new-patch.cjs && node scripts/detail-ui-patch.cjs",
+    "prebuild": "node scripts/patch-app.cjs && node scripts/policy-logic-runner.cjs && node scripts/reclaim-new-patch.cjs && node scripts/detail-ui-patch.cjs && node scripts/scenario-sync-patch.cjs",
     "build": "vite build",
     "preview": "vite preview"
   },
